@@ -733,6 +733,21 @@ export const polls = router({
       if (!res) {
         return null;
       }
+
+      // Check if deadline has passed and poll is still live
+      // This is a safety net in case the cron job missed closing the poll
+      if (
+        res.deadline &&
+        res.status === "live" &&
+        dayjs(res.deadline).isBefore(dayjs())
+      ) {
+        await prisma.poll.update({
+          where: { id: res.id },
+          data: { status: "paused" },
+        });
+        res.status = "paused";
+      }
+
       const inviteLink = shortUrl(`/invite/${res.id}`);
 
       const canManagePoll = ctx.user
