@@ -107,10 +107,25 @@ export const useDeleteParticipantMutation = () => {
 };
 
 export const useUpdatePollMutation = () => {
+  const { t } = useTranslation();
   return trpc.polls.update.useMutation({
     onError: (error) => {
       if (error.data?.code === "BAD_REQUEST") {
-        toast.error(error.message);
+        if (error.message === "deadlineCannotEditPassed") {
+          toast.error(
+            t("deadlineCannotEditPassed", {
+              defaultValue: "Cannot edit deadline after it has passed",
+            }),
+          );
+        } else if (error.message === "deadlineMustBeInFuture") {
+          toast.error(
+            t("deadlineMustBeInFuture", {
+              defaultValue: "Deadline must be in the future",
+            }),
+          );
+        } else {
+          toast.error(error.message);
+        }
       }
     },
   });

@@ -12,12 +12,14 @@ import { Form } from "@rallly/ui/form";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import dayjs from "dayjs";
 
 import type { PollDetailsData } from "@/components/forms/poll-details-form";
 import { PollDetailsForm } from "@/components/forms/poll-details-form";
 import { useUpdatePollMutation } from "@/components/poll/mutations";
 import { usePoll } from "@/components/poll-context";
 import { Trans } from "@/components/trans";
+import { getBrowserTimeZone } from "@/utils/date-time-utils";
 
 const Page = () => {
   const { poll } = usePoll();
@@ -32,11 +34,26 @@ const Page = () => {
     router.push(pollLink);
   };
 
-  const form = useForm<PollDetailsData>({
+  // Convert deadline from UTC to user timezone for display
+  const deadlineForForm = poll.deadline
+    ? (() => {
+        const timeZone = poll.timeZone || getBrowserTimeZone();
+        if (timeZone) {
+          return dayjs(poll.deadline).utc().tz(timeZone).toISOString();
+        }
+        return dayjs(poll.deadline).utc().toISOString();
+      })()
+    : null;
+
+  const timeZone = poll.timeZone || getBrowserTimeZone();
+
+  const form = useForm<PollDetailsData & { timeZone?: string }>({
     defaultValues: {
       title: poll.title,
       location: poll.location ?? "",
       description: poll.description ?? "",
+      deadline: deadlineForForm,
+      timeZone,
     },
   });
 
@@ -64,7 +81,7 @@ const Page = () => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <PollDetailsForm />
+            <PollDetailsForm timeZone={timeZone} existingDeadline={poll.deadline} />
           </CardContent>
           <CardFooter className="justify-between">
             <Button asChild>

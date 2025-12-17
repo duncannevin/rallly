@@ -7,6 +7,7 @@ import { Trans } from "@/components/trans";
 import { useTranslation } from "@/i18n/client";
 import { useFormValidation } from "@/utils/form-validation";
 
+import { DeadlineEditPicker } from "./deadline-edit-picker";
 import { DeadlinePicker } from "./deadline-picker";
 import type { NewEventData } from "./types";
 
@@ -17,7 +18,15 @@ export interface PollDetailsData {
   deadline: string | null;
 }
 
-export const PollDetailsForm = () => {
+export interface PollDetailsFormProps {
+  timeZone?: string;
+  existingDeadline?: Date | null;
+}
+
+export const PollDetailsForm = ({
+  timeZone,
+  existingDeadline,
+}: PollDetailsFormProps = {}) => {
   const { t } = useTranslation();
   const form = useFormContext<NewEventData>();
 
@@ -85,7 +94,14 @@ export const PollDetailsForm = () => {
           {...register("description")}
         />
       </FormItem>
-      <DeadlinePicker />
+      {existingDeadline !== undefined ? (
+        <DeadlineEditPicker
+          existingDeadline={existingDeadline}
+          timeZone={timeZone}
+        />
+      ) : (
+        <DeadlinePicker timeZone={timeZone} />
+      )}
     </div>
   );
 };
