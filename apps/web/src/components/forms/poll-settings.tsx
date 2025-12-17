@@ -18,11 +18,15 @@ import { ProBadge } from "@/components/pro-badge";
 import { useBilling } from "@/features/billing/client";
 import { useSpace } from "@/features/space/client";
 
+import { DeadlineEditPicker } from "./deadline-edit-picker";
+
 export type PollSettingsFormData = {
   requireParticipantEmail: boolean;
   hideParticipants: boolean;
   hideScores: boolean;
   disableComments: boolean;
+  deadline: string | null;
+  timeZone?: string;
 };
 
 const SettingContent = ({ children }: React.PropsWithChildren) => {
@@ -62,7 +66,16 @@ const Setting = ({ children }: React.PropsWithChildren) => {
   );
 };
 
-export const PollSettingsForm = ({ children }: React.PropsWithChildren) => {
+export interface PollSettingsFormProps extends React.PropsWithChildren {
+  existingDeadline?: Date | null;
+  timeZone?: string;
+}
+
+export const PollSettingsForm = ({
+  children,
+  existingDeadline,
+  timeZone,
+}: PollSettingsFormProps) => {
   const form = useFormContext<PollSettingsFormData>();
   const posthog = usePostHog();
   const { showPayWall } = useBilling();
@@ -91,6 +104,10 @@ export const PollSettingsForm = ({ children }: React.PropsWithChildren) => {
       </CardHeader>
       <CardContent>
         <div className={cn("grid gap-2.5")}>
+          <DeadlineEditPicker
+            existingDeadline={existingDeadline}
+            timeZone={timeZone}
+          />
           <FormField
             control={form.control}
             name="disableComments"

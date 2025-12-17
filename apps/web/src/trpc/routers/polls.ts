@@ -377,6 +377,7 @@ export const polls = router({
         disableComments: z.boolean().optional(),
         hideScores: z.boolean().optional(),
         requireParticipantEmail: z.boolean().optional(),
+        deadline: z.string().nullable().optional(),
       }),
     )
     .use(requireUserMiddleware)
@@ -406,6 +407,39 @@ export const polls = router({
     })
     .mutation(async ({ input, ctx }) => {
       const pollId = await getPollIdFromAdminUrlId(input.urlId);
+
+      // Check if deadline is being updated and validate
+      if (input.deadline !== undefined) {
+        // Get existing poll to check current deadline
+        const existingPoll = await prisma.poll.findUnique({
+          where: { id: pollId },
+          select: {
+            deadline: true,
+          },
+        });
+
+        // If existing deadline has passed, prevent editing
+        if (
+          existingPoll?.deadline &&
+          dayjs(existingPoll.deadline).isBefore(dayjs())
+        ) {
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message: "deadlineCannotEditPassed",
+          });
+        }
+
+        // If new deadline is provided, validate it's in the future
+        if (input.deadline !== null) {
+          const deadlineDate = dayjs(input.deadline);
+          if (!deadlineDate.isAfter(dayjs())) {
+            throw new TRPCError({
+              code: "BAD_REQUEST",
+              message: "deadlineMustBeInFuture",
+            });
+          }
+        }
+      }
 
       if (input.optionsToDelete && input.optionsToDelete.length > 0) {
         await prisma.option.deleteMany({
@@ -441,6 +475,21 @@ export const polls = router({
         });
       }
 
+      // Convert deadline from user timezone to UTC if provided
+      let deadline: Date | null | undefined = undefined;
+      if (input.deadline !== undefined) {
+        if (input.deadline === null) {
+          deadline = null;
+        } else {
+          const deadlineDate = dayjs(input.deadline);
+          if (input.timeZone) {
+            deadline = deadlineDate.tz(input.timeZone).utc().toDate();
+          } else {
+            deadline = deadlineDate.utc().toDate();
+          }
+        }
+      }
+
       await prisma.poll.update({
         select: { id: true },
         where: {
@@ -455,6 +504,7 @@ export const polls = router({
           hideParticipants: input.hideParticipants,
           disableComments: input.disableComments,
           requireParticipantEmail: input.requireParticipantEmail,
+          ...(deadline !== undefined ? { deadline } : {}),
         },
       });
 

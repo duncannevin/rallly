@@ -141,22 +141,22 @@
 
 ### Implementation for User Story 4
 
-- [ ] T039 [US4] Add deadline field to PollSettingsFormData type in `apps/web/src/components/forms/poll-settings.tsx` (or create separate deadline editing component)
-- [ ] T040 [US4] Add deadline field to poll edit form (determine if in PollSettingsForm or separate deadline editing component) with date/time picker
-- [ ] T041 [US4] Load existing deadline value in poll edit form and convert from UTC to user timezone for display
-- [ ] T042 [US4] Add validation to check if deadline has passed before allowing edit (display read-only with "Deadline passed" message if passed)
-- [ ] T043 [US4] Update polls.update mutation input schema to accept optional deadline parameter (nullable) in `apps/web/src/trpc/routers/polls.ts`
-- [ ] T044 [US4] Add validation in polls.update mutation to prevent editing deadline if existing deadline has passed
-- [ ] T045 [US4] Add validation in polls.update mutation to ensure new deadline is in future (if provided)
-- [ ] T046 [US4] Convert deadline from user timezone to UTC in polls.update mutation before storing
-- [ ] T047 [US4] Include deadline field in polls.update mutation data object (allow setting to null to remove deadline)
-- [ ] T048 [US4] Update poll edit form submission to include deadline in polls.update mutation call
-- [ ] T049 [US4] Add i18n translation keys for deadline editing (deadlineEditLabel, deadlinePassed, deadlineCannotEditPassed)
+- [x] T039 [US4] Add deadline field to PollSettingsFormData type in `apps/web/src/components/forms/poll-settings.tsx` (or create separate deadline editing component)
+- [x] T040 [US4] Add deadline field to poll edit form (determine if in PollSettingsForm or separate deadline editing component) with date/time picker
+- [x] T041 [US4] Load existing deadline value in poll edit form and convert from UTC to user timezone for display
+- [x] T042 [US4] Add validation to check if deadline has passed before allowing edit (display read-only with "Deadline passed" message if passed)
+- [x] T043 [US4] Update polls.update mutation input schema to accept optional deadline parameter (nullable) in `apps/web/src/trpc/routers/polls.ts`
+- [x] T044 [US4] Add validation in polls.update mutation to prevent editing deadline if existing deadline has passed
+- [x] T045 [US4] Add validation in polls.update mutation to ensure new deadline is in future (if provided)
+- [x] T046 [US4] Convert deadline from user timezone to UTC in polls.update mutation before storing
+- [x] T047 [US4] Include deadline field in polls.update mutation data object (allow setting to null to remove deadline)
+- [x] T048 [US4] Update poll edit form submission to include deadline in polls.update mutation call
+- [x] T049 [US4] Add i18n translation keys for deadline editing (deadlineEditLabel, deadlinePassed, deadlineCannotEditPassed)
 
 ### QA Testing for Phase 6 (User Story 4)
 
-- [ ] T080 [P] [US4] Create Phase 6 QA test file with Gherkin scenarios in `specs/001-poll-deadline-enforcement/tests/phase-6-user-story-4.feature`
-- [ ] T081 [US4] Execute Phase 6 QA tests: Verify deadline editing works correctly with proper validation and read-only states, regression test Phases 3-5 (QA Stop Point - do not proceed to Phase 7 until Phases 3-6 tests pass)
+- [x] T080 [P] [US4] Create Phase 6 QA test file with Gherkin scenarios in `specs/001-poll-deadline-enforcement/tests/phase-6-user-story-4.feature`
+- [x] T081 [US4] Execute Phase 6 QA tests: Verify deadline editing works correctly with proper validation and read-only states, regression test Phases 3-5 (QA Stop Point - do not proceed to Phase 7 until Phases 3-6 tests pass)
 
 **Checkpoint**: At this point, User Stories 1-4 should work independently - deadlines can be set, displayed, auto-closed, and edited
 
