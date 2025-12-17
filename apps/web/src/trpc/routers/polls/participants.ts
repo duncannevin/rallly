@@ -3,6 +3,7 @@ import { absoluteUrl } from "@rallly/utils/absolute-url";
 import * as Sentry from "@sentry/nextjs";
 import { TRPCError } from "@trpc/server";
 import { waitUntil } from "@vercel/functions";
+import dayjs from "dayjs";
 import { z } from "zod";
 import { hasPollAdminAccess } from "@/features/poll/query";
 import { getEmailClient } from "@/utils/emails";
@@ -17,6 +18,42 @@ import type { DisableNotificationsPayload } from "../../types";
 import { createParticipantEditToken, resolveUserId } from "./utils";
 
 const MAX_PARTICIPANTS = 1000;
+
+async function checkVotingAllowed(pollId: string) {
+  const poll = await prisma.poll.findUnique({
+    where: { id: pollId },
+    select: {
+      deadline: true,
+      status: true,
+    },
+  });
+
+  if (!poll) {
+    throw new TRPCError({
+      code: "NOT_FOUND",
+      message: "Poll not found",
+    });
+  }
+
+  // Check if deadline has passed
+  if (poll.deadline && dayjs(poll.deadline).isBefore(dayjs())) {
+    const deadlineFormatted = dayjs(poll.deadline).format("LLL");
+    throw new TRPCError({
+      code: "BAD_REQUEST",
+      message: `deadlinePassed:${deadlineFormatted}`,
+    });
+  }
+
+  // Check if poll is paused or finalized
+  if (poll.status !== "live") {
+    throw new TRPCError({
+      code: "BAD_REQUEST",
+      message: "pollNotLive",
+    });
+  }
+
+  return poll;
+}
 
 async function canModifyParticipant(participantId: string, userId: string) {
   const participant = await prisma.participant.findUnique({
@@ -215,6 +252,9 @@ export const participants = router({
     )
     .mutation(
       async ({ ctx, input: { pollId, votes, name, email, timeZone } }) => {
+        // Check if voting is allowed (deadline not passed, poll is live)
+        await checkVotingAllowed(pollId);
+
         const { participant, totalResponses } = await prisma.$transaction(
           async (prisma) => {
             const participantCount = await prisma.participant.count({
@@ -381,6 +421,9 @@ export const participants = router({
       );
 
       const pollId = existingParticipant.pollId;
+
+      // Check if voting is allowed (deadline not passed, poll is live)
+      await checkVotingAllowed(pollId);
 
       const participant = await prisma.$transaction(async (tx) => {
         // Delete existing votes

@@ -1,5 +1,6 @@
 import { toast } from "@rallly/ui/sonner";
 import { useSearchParams } from "next/navigation";
+import { useTranslation } from "@/i18n/client";
 import { usePoll } from "@/components/poll-context";
 import { trpc } from "@/trpc/client";
 import type { ParticipantForm } from "./types";
@@ -20,11 +21,34 @@ export const useEditToken = () => {
 };
 
 export const useAddParticipantMutation = () => {
-  return trpc.polls.participants.add.useMutation();
+  const { t } = useTranslation();
+  return trpc.polls.participants.add.useMutation({
+    onError: (error) => {
+      if (error.data?.code === "BAD_REQUEST") {
+        if (error.message.startsWith("deadlinePassed:")) {
+          const deadline = error.message.split(":")[1];
+          toast.error(
+            t("deadlinePassedError", {
+              defaultValue: "The deadline for this poll has passed",
+            }),
+            {
+              description: t("deadlinePassedErrorDescription", {
+                defaultValue: "The deadline was {deadline}. New votes are no longer being accepted.",
+                deadline,
+              }),
+            },
+          );
+        } else {
+          toast.error(error.message);
+        }
+      }
+    },
+  });
 };
 
 export const useUpdateParticipantMutation = () => {
   const queryClient = trpc.useUtils();
+  const { t } = useTranslation();
   return trpc.polls.participants.update.useMutation({
     onSuccess: (participant) => {
       queryClient.polls.participants.list.setData(
@@ -43,6 +67,26 @@ export const useUpdateParticipantMutation = () => {
           return newParticipants;
         },
       );
+    },
+    onError: (error) => {
+      if (error.data?.code === "BAD_REQUEST") {
+        if (error.message.startsWith("deadlinePassed:")) {
+          const deadline = error.message.split(":")[1];
+          toast.error(
+            t("deadlinePassedError", {
+              defaultValue: "The deadline for this poll has passed",
+            }),
+            {
+              description: t("deadlinePassedErrorDescription", {
+                defaultValue: "The deadline was {deadline}. New votes are no longer being accepted.",
+                deadline,
+              }),
+            },
+          );
+        } else {
+          toast.error(error.message);
+        }
+      }
     },
   });
 };

@@ -111,22 +111,22 @@
 
 ### Implementation for User Story 3
 
-- [ ] T027 [P] [US3] Implement close-expired-polls cron job endpoint in `apps/web/src/app/api/house-keeping/[...method]/route.ts` following existing house-keeping pattern
-- [ ] T028 [US3] Add query logic to find polls where deadline <= NOW() AND status = 'live' AND deadline IS NOT NULL in close-expired-polls endpoint
-- [ ] T029 [US3] Update poll status to 'paused' for expired polls in batches (BATCH_SIZE = 100) in close-expired-polls endpoint
-- [ ] T030 [US3] Create DeadlineClosedEmail template in `packages/emails/src/templates/deadline-closed.tsx` following existing email template patterns
-- [ ] T031 [US3] Add DeadlineClosedEmail to templates.ts export in `packages/emails/src/templates.ts`
-- [ ] T032 [US3] Send email notification to poll creator when poll is closed at deadline in close-expired-polls endpoint (query poll.user.email and send via EmailClient)
-- [ ] T033 [US3] Add deadline status check in polls.get query to handle cases where cron job may have missed closure in `apps/web/src/trpc/routers/polls.ts`
-- [ ] T034 [US3] Update poll status to 'paused' synchronously in polls.get if deadline passed and status is still 'live'
-- [ ] T035 [US3] Add validation to prevent voting after deadline in vote submission logic (find where votes are created)
-- [ ] T036 [US3] Add error message display when users attempt to vote after deadline showing the deadline date/time
-- [ ] T037 [US3] Configure close-expired-polls cron job in `apps/web/vercel.json` with schedule "*/15 * * * *" (every 15 minutes)
-- [ ] T038 [US3] Add i18n translation keys for deadline closure error messages using Trans component
+- [x] T027 [P] [US3] Implement close-expired-polls cron job endpoint in `apps/web/src/app/api/house-keeping/[...method]/route.ts` following existing house-keeping pattern
+- [x] T028 [US3] Add query logic to find polls where deadline <= NOW() AND status = 'live' AND deadline IS NOT NULL in close-expired-polls endpoint
+- [x] T029 [US3] Update poll status to 'paused' for expired polls in batches (BATCH_SIZE = 100) in close-expired-polls endpoint
+- [x] T030 [US3] Create DeadlineClosedEmail template in `packages/emails/src/templates/deadline-closed.tsx` following existing email template patterns
+- [x] T031 [US3] Add DeadlineClosedEmail to templates.ts export in `packages/emails/src/templates.ts`
+- [x] T032 [US3] Send email notification to poll creator when poll is closed at deadline in close-expired-polls endpoint (query poll.user.email and send via EmailClient)
+- [x] T033 [US3] Add deadline status check in polls.get query to handle cases where cron job may have missed closure in `apps/web/src/trpc/routers/polls.ts`
+- [x] T034 [US3] Update poll status to 'paused' synchronously in polls.get if deadline passed and status is still 'live'
+- [x] T035 [US3] Add validation to prevent voting after deadline in vote submission logic (find where votes are created)
+- [x] T036 [US3] Add error message display when users attempt to vote after deadline showing the deadline date/time
+- [x] T037 [US3] Configure close-expired-polls cron job in `apps/web/vercel.json` with schedule "*/15 * * * *" (every 15 minutes)
+- [x] T038 [US3] Add i18n translation keys for deadline closure error messages using Trans component
 
 ### QA Testing for Phase 5 (User Story 3)
 
-- [ ] T078 [P] [US3] Create Phase 5 QA test file with Gherkin scenarios in `specs/001-poll-deadline-enforcement/tests/phase-5-user-story-3.feature`
+- [x] T078 [P] [US3] Create Phase 5 QA test file with Gherkin scenarios in `specs/001-poll-deadline-enforcement/tests/phase-5-user-story-3.feature`
 - [ ] T079 [US3] Execute Phase 5 QA tests: Verify automatic closure works, voting is blocked, emails are sent, and synchronous checks work, regression test Phases 3-4 (QA Stop Point - do not proceed to Phase 6 until Phases 3-5 tests pass)
 
 **Checkpoint**: At this point, User Stories 1, 2, AND 3 should work independently - deadlines close polls automatically and prevent new votes
