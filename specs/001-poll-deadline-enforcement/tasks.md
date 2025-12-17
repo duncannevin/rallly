@@ -127,7 +127,7 @@
 ### QA Testing for Phase 5 (User Story 3)
 
 - [x] T078 [P] [US3] Create Phase 5 QA test file with Gherkin scenarios in `specs/001-poll-deadline-enforcement/tests/phase-5-user-story-3.feature`
-- [ ] T079 [US3] Execute Phase 5 QA tests: Verify automatic closure works, voting is blocked, emails are sent, and synchronous checks work, regression test Phases 3-4 (QA Stop Point - do not proceed to Phase 6 until Phases 3-5 tests pass)
+- [x] T079 [US3] Execute Phase 5 QA tests: Verify automatic closure works, voting is blocked, emails are sent, and synchronous checks work, regression test Phases 3-4 (QA Stop Point - do not proceed to Phase 6 until Phases 3-5 tests pass)
 
 **Checkpoint**: At this point, User Stories 1, 2, AND 3 should work independently - deadlines close polls automatically and prevent new votes
 

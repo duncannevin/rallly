@@ -1843,3 +1843,617 @@ All tasks are complete except **T079** (QA test execution), which you'll handle 
 
 ---
 
+_**User (2025-12-17 14:46Z)**_
+
+how can i make the cronjob run?
+
+---
+
+_**Agent (model default, mode Ask)**_
+
+
+
+---
+
+
+Checking how to run the cron job. Reviewing the setup and testing options:
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/duncannevin/Documents/rallly/apps/web/src/app/api/house-keeping/[...method]/route.ts</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/duncannevin/Documents/rallly/apps/web/vercel.json</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="codebase_search">
+<details>
+                <summary>Tool use: **codebase_search** • Searched codebase "How are house-keeping cron jobs tested or manually triggered?" • **15** results</summary>
+            
+| File | Lines |
+|------|-------|
+| `apps/web/vercel.json` | L20 |
+| `apps/web/tests/house-keeping.spec.ts` | L249 |
+| `apps/web/src/app/api/house-keeping/[...method]/route.ts` | L23 |
+| `specs/001-poll-deadline-enforcement/contracts/api.md` | L84-179 |
+| `package.json` | L49 |
+| `turbo.json` | L66 |
+| `.github/workflows/ci.yml` | L70 |
+| `CLAUDE.md` | L77 |
+| `specs/001-poll-deadline-enforcement/research.md` | L45 |
+| `specs/001-poll-deadline-enforcement/quickstart.md` | L58-139 |
+| `apps/web/tests/house-keeping.spec.ts` | L9-249 |
+| `apps/web/package.json` | L54 |
+| `.github/workflows/ci.yml` | L67-100 |
+| `apps/web/src/app/api/house-keeping/[...method]/route.ts` | L12-76 |
+| `docker-compose.dev.yml` | L74 |
+
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+Here are ways to run the cron job:
+
+## 1. Automatic execution (production)
+
+On Vercel, it runs automatically every 15 minutes (`*/15 * * * *`). After deploying, Vercel handles scheduling.
+
+## 2. Manual testing (local or production)
+
+Make a GET request with the `CRON_SECRET` bearer token:
+
+### Using curl:
+
+```bash
+curl -X GET http://localhost:3000/api/house-keeping/close-expired-polls \
+  -H "Authorization: Bearer YOUR_CRON_SECRET"
+```
+
+Replace `YOUR_CRON_SECRET` with your `CRON_SECRET` environment variable value.
+
+### Using a script:
+
+```bash
+# Make sure CRON_SECRET is set in your environment
+export CRON_SECRET="your-secret-here"
+
+# Then make the request
+curl -X GET http://localhost:3000/api/house-keeping/close-expired-polls \
+  -H "Authorization: Bearer $CRON_SECRET"
+```
+
+### Using a browser extension or tool:
+
+- Postman: GET request with Bearer token in Authorization header
+- HTTPie: `http GET http://localhost:3000/api/house-keeping/close-expired-polls Authorization:"Bearer YOUR_CRON_SECRET"`
+
+## 3. Testing locally
+
+1. Ensure `CRON_SECRET` is set in your `.env` file
+2. Start your dev server: `pnpm dev`
+3. Make a manual request as shown above
+
+## 4. Expected response
+
+On success:
+```json
+{
+  "success": true,
+  "summary": {
+    "closedCount": 0
+  }
+}
+```
+
+## Notes
+
+- The endpoint requires bearer authentication using `CRON_SECRET`
+- If `CRON_SECRET` is not set, it returns a 500 error
+- The cron job processes polls in batches of 100
+- It only closes polls where `deadline <= NOW() AND status = 'live' AND deadline IS NOT NULL`
+
+For local testing, create a test poll with a deadline in the past and trigger the endpoint manually to verify it works.
+
+---
+
+_**User (2025-12-17 14:46Z)**_
+
+what is the cron_secret right now?
+
+---
+
+_**Agent (model default, mode Ask)**_
+
+
+
+---
+
+
+Checking where `CRON_SECRET` is defined:
+
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="grep">
+<details>
+<summary>Tool use: **grep** • Grep for "CRON_SECRET" in "." • 13 matches</summary>
+
+Output mode: content
+
+
+| File | Content | Line |
+|------|------|------|
+| `./apps/web/src/app/api/house-keeping/[...method]/route.ts` | `if (process.env.CRON_SECRET) \{` | L14 |
+| `./apps/web/src/app/api/house-keeping/[...method]/route.ts` | `return bearerAuth(\{ token: process.env.CRON_SECRET \})(c, next);` | L15 |
+| `./apps/web/src/app/api/house-keeping/[...method]/route.ts` | `error: "CRON_SECRET is not set in environment variables",` | L20 |
+| `./specs/001-poll-deadline-enforcement/research.md` | `- Use Hono router pattern with bearer auth via CRON_SECRET` | L35 |
+| `./specs/001-poll-deadline-enforcement/quickstart.md` | `- [ ] CRON_SECRET environment variable set` | L196 |
+| `./specs/001-poll-deadline-enforcement/quickstart.md` | `- Verify CRON_SECRET is set` | L212 |
+| `./specs/001-poll-deadline-enforcement/contracts/api.md` | `**Authentication**: Bearer token (CRON_SECRET)` | L103 |
+| `./specs/001-poll-deadline-enforcement/contracts/api.md` | `**Authentication**: Bearer token (CRON_SECRET)` | L130 |
+| `./turbo.json` | `"CRON_SECRET",` | L69 |
+| `./apps/web/tests/house-keeping.spec.ts` | `const CRON_SECRET = process.env.CRON_SECRET;` | L17 |
+| `./apps/web/tests/house-keeping.spec.ts` | `Authorization: `Bearer $\{CRON_SECRET\}`,` | L137 |
+| `./apps/web/tests/house-keeping.spec.ts` | `Authorization: `Bearer $\{CRON_SECRET\}`,` | L225 |
+| `./apps/web/src/utils/api-auth.ts` | `if (authorization !== `Bearer $\{process.env.CRON_SECRET\}`) \{` | L12 |
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="file_search">
+<details>
+            <summary>Tool use: **file_search** • Searched codebase ".env" • **0** results</summary>
+        
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="codebase_search">
+<details>
+                <summary>Tool use: **codebase_search** • Searched codebase "Where is CRON_SECRET environment variable defined or documented?" • **11** results</summary>
+            
+| File | Lines |
+|------|-------|
+| `apps/web/src/app/api/house-keeping/[...method]/route.ts` | L23 |
+| `apps/web/declarations/environment.d.ts` | L100 |
+| `turbo.json` | L57-123 |
+| `apps/landing/declarations/environment.d.ts` | L104 |
+| `apps/web/src/env.ts` | L174 |
+| `apps/web/src/utils/api-auth.ts` | L19 |
+| `apps/docs/self-hosting/installation/docker.mdx` | L56 |
+| `apps/web/declarations/environment.d.ts` | L102 |
+| `apps/web/src/env.ts` | L4-174 |
+| `specs/001-poll-deadline-enforcement/research.md` | L45 |
+| `apps/docs/self-hosting/configuration.mdx` | L62 |
+
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+Checking for example env files or documentation that shows how `CRON_SECRET` is set:
+
+
+---
+
+<tool-use data-tool-type="generic" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "**/.env*" • **3** results in **1** directory</summary>
+
+Directory: **/Users/duncannevin/Documents/rallly** (3 files)
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/duncannevin/Documents/rallly/apps/web/src/utils/api-auth.ts</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="codebase_search">
+<details>
+                <summary>Tool use: **codebase_search** • Searched codebase "How to set or generate CRON_SECRET environment variable?" • **10** results</summary>
+            
+| File | Lines |
+|------|-------|
+| `apps/web/src/app/api/house-keeping/[...method]/route.ts` | L23 |
+| `apps/web/declarations/environment.d.ts` | L100 |
+| `apps/web/src/utils/api-auth.ts` | L19 |
+| `apps/landing/declarations/environment.d.ts` | L104 |
+| `turbo.json` | L57-123 |
+| `apps/web/src/env.ts` | L174 |
+| `apps/docs/self-hosting/installation/docker.mdx` | L56 |
+| `apps/web/vercel.json` | L20 |
+| `apps/web/src/env.ts` | L4-174 |
+| `specs/001-poll-deadline-enforcement/research.md` | L45 |
+
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+I can't see the current `CRON_SECRET` value because it's an environment variable. Check it as follows:
+
+## Check current value
+
+**In your terminal:**
+```bash
+echo $CRON_SECRET
+```
+
+**Or if using a `.env` file:**
+```bash
+grep CRON_SECRET .env
+```
+
+## If it's not set
+
+If it's not set, generate a secure random value and add it to your environment:
+
+**Generate a random secret:**
+```bash
+# Using openssl
+openssl rand -hex 32
+
+# Or using Node.js
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+```
+
+**Then add it to your `.env` file:**
+```bash
+CRON_SECRET=your-generated-secret-here
+```
+
+**Or export it in your terminal:**
+```bash
+export CRON_SECRET=your-generated-secret-here
+```
+
+## For Vercel deployment
+
+If you're deploying to Vercel, set it in your Vercel project settings:
+1. Go to your Vercel project dashboard
+2. Settings → Environment Variables
+3. Add `CRON_SECRET` with your generated secret value
+
+## Important notes
+
+- `CRON_SECRET` is optional — if not set, the endpoint returns an error
+- It should be a secure random string (at least 32 characters recommended)
+- Keep it secret — don't commit it to version control
+- Use the same value in all environments (dev, staging, production) if you want to test manually
+
+If you want, I can help you generate a secure value or check if it's currently set in your environment.
+
+---
+
+_**User (2025-12-17 14:46Z)**_
+
+how can i do this on my local machine
+
+---
+
+_**Agent (model default, mode Ask)**_
+
+
+
+---
+
+
+Setting up and running the cron job locally:
+
+## 1. Set CRON_SECRET in your environment
+
+### Option A: Add to `.env` file (recommended)
+
+Create or edit a `.env` file in your project root (or `apps/web/.env` if that's where your env files are):
+
+```bash
+# Generate a secret first
+openssl rand -hex 32
+
+# Then add to .env file
+CRON_SECRET=your-generated-secret-here
+```
+
+### Option B: Export in your terminal session
+
+```bash
+# Generate and set in one command
+export CRON_SECRET=$(openssl rand -hex 32)
+```
+
+## 2. Start your development server
+
+```bash
+pnpm dev
+```
+
+This should pick up the `CRON_SECRET` from your `.env` file.
+
+## 3. Test the endpoint manually
+
+Once your server is running (typically on `http://localhost:3000`), you can trigger the cron job manually:
+
+### Using curl:
+
+```bash
+curl -X GET http://localhost:3000/api/house-keeping/close-expired-polls \
+  -H "Authorization: Bearer $CRON_SECRET"
+```
+
+Or if you set it in `.env`, use the value directly:
+
+```bash
+curl -X GET http://localhost:3000/api/house-keeping/close-expired-polls \
+  -H "Authorization: Bearer your-secret-from-env-file"
+```
+
+### Using HTTPie (if installed):
+
+```bash
+http GET http://localhost:3000/api/house-keeping/close-expired-polls \
+  Authorization:"Bearer $CRON_SECRET"
+```
+
+### Using a browser extension:
+
+- Install a REST client extension (like REST Client for VS Code, or use Postman)
+- Method: `GET`
+- URL: `http://localhost:3000/api/house-keeping/close-expired-polls`
+- Headers: `Authorization: Bearer YOUR_CRON_SECRET`
+
+## 4. Verify it's working
+
+You should get a JSON response like:
+
+```json
+{
+  "success": true,
+  "summary": {
+    "closedCount": 0
+  }
+}
+```
+
+If `CRON_SECRET` is not set or incorrect, you'll get:
+
+```json
+{
+  "error": "CRON_SECRET is not set in environment variables"
+}
+```
+
+or
+
+```json
+{
+  "success": false,
+  "message": "Unauthorized"
+}
+```
+
+## Quick test script
+
+You can create a simple test script to make it easier:
+
+```bash
+#!/bin/bash
+# test-cron.sh
+
+if [ -z "$CRON_SECRET" ]; then
+  echo "Error: CRON_SECRET not set. Please set it first:"
+  echo "export CRON_SECRET=\$(openssl rand -hex 32)"
+  exit 1
+fi
+
+curl -X GET http://localhost:3000/api/house-keeping/close-expired-polls \
+  -H "Authorization: Bearer $CRON_SECRET" \
+  | jq .
+```
+
+Make it executable and run:
+```bash
+chmod +x test-cron.sh
+./test-cron.sh
+```
+
+## Note
+
+On your local machine, the cron job won't run automatically every 15 minutes like it does on Vercel. You'll need to trigger it manually for testing. The `vercel.json` cron configuration only works when deployed to Vercel.
+
+If you want to test with a poll that has a passed deadline, create a test poll in your database with a deadline in the past, then trigger the endpoint to see it get closed.
+
+---
+
+_**User (2025-12-17 14:46Z)**_
+
+should the endpoint is not changing the expired poll to finalized
+
+---
+
+_**Agent (model default, mode Ask)**_
+
+
+
+---
+
+
+Checking the current implementation and specification:
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/duncannevin/Documents/rallly/apps/web/src/app/api/house-keeping/[...method]/route.ts</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/duncannevin/Documents/rallly/specs/001-poll-deadline-enforcement/tasks.md</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="grep">
+<details>
+<summary>Tool use: **grep** • Grep for "status.*paused|paused.*status" in "specs/001-poll-deadline-enforcement" • 28 matches</summary>
+
+Output mode: content
+
+
+| File | Content | Line |
+|------|------|------|
+| `specs/001-poll-deadline-enforcement/tasks.md` | `**Independent Test**: Create a poll with a deadline in the near future, wait for the deadline to pass, and verify the poll status changes to paused, new votes are blocked with appropriate error message, existing votes remain visible, and poll creator receives email notification.` | L110 |
+| `specs/001-poll-deadline-enforcement/tasks.md` | `- [x] T029 [US3] Update poll status to 'paused' for expired polls in batches (BATCH_SIZE = 100) in close-expired-polls endpoint` | L116 |
+| `specs/001-poll-deadline-enforcement/tasks.md` | `- [x] T034 [US3] Update poll status to 'paused' synchronously in polls.get if deadline passed and status is still 'live'` | L121 |
+| `specs/001-poll-deadline-enforcement/tests/phase-5-user-story-3.feature` | `Then poll "poll1" status should be updated to "paused"` | L14 |
+| `specs/001-poll-deadline-enforcement/tests/phase-5-user-story-3.feature` | `And poll "poll1" status is "paused"` | L28 |
+| `specs/001-poll-deadline-enforcement/tests/phase-5-user-story-3.feature` | `And the poll status should be "paused"` | L40 |
+| `specs/001-poll-deadline-enforcement/tests/phase-5-user-story-3.feature` | `Then poll "poll1" status should be updated to "paused" synchronously` | L46 |
+| `specs/001-poll-deadline-enforcement/tests/phase-5-user-story-3.feature` | `Then poll "poll1" status should be "paused"` | L69 |
+| `specs/001-poll-deadline-enforcement/tests/phase-5-user-story-3.feature` | `And poll "poll2" status should be "paused"` | L70 |
+| `specs/001-poll-deadline-enforcement/spec.md` | `1. **Given** a poll has a deadline that has passed, **When** the deadline enforcement process runs, **Then** the poll status is updated to closed/paused` | L64 |
+| `specs/001-poll-deadline-enforcement/spec.md` | `- Poll status field supports 'paused' or similar status for closed polls` | L176 |
+| `specs/001-poll-deadline-enforcement/spec.md` | `- Creating new poll status types (using existing 'paused' status for closed polls)` | L191 |
+| `specs/001-poll-deadline-enforcement/research.md` | `- If deadline passed and status is 'live', update to 'paused' immediately` | L70 |
+| `specs/001-poll-deadline-enforcement/research.md` | `**Decision**: Use existing 'paused' status for deadline-closed polls` | L107 |
+| `specs/001-poll-deadline-enforcement/research.md` | `**Rationale**: The PollStatus enum already has 'paused' status. Reusing it avoids schema changes and maintains consistency. Deadline closure is essentially pausing the poll.` | L109 |
+| `specs/001-poll-deadline-enforcement/research.md` | `- New 'closed' status (rejected: requires schema migration, 'paused' is semantically appropriate)` | L112 |
+| `specs/001-poll-deadline-enforcement/research.md` | `- Update poll.status to 'paused' when deadline passes` | L116 |
+| `specs/001-poll-deadline-enforcement/research.md` | `✅ Poll status enum includes 'paused'` | L165 |
+| `specs/001-poll-deadline-enforcement/quickstart.md` | `- [ ] Update poll status to 'paused' when deadline passes` | L32 |
+| `specs/001-poll-deadline-enforcement/plan.md` | `Then poll "poll1" status should be updated to "paused"` | L343 |
+| `specs/001-poll-deadline-enforcement/plan.md` | `And poll "poll1" status is "paused"` | L348 |
+| `specs/001-poll-deadline-enforcement/plan.md` | `Then the poll status should be immediately updated to "paused"` | L377 |
+| `specs/001-poll-deadline-enforcement/plan.md` | `And the updated poll with status "paused" should be returned` | L378 |
+| `specs/001-poll-deadline-enforcement/plan.md` | `Then all 150 polls should have status updated to "paused"` | L383 |
+| `specs/001-poll-deadline-enforcement/data-model.md` | `- When deadline passes and status is 'live' → status changes to 'paused'` | L26 |
+| `specs/001-poll-deadline-enforcement/data-model.md` | `3. Update status to 'paused' for matching polls` | L130 |
+| `specs/001-poll-deadline-enforcement/contracts/api.md` | `- If deadline passed and status is 'live', update status to 'paused'` | L86 |
+| `specs/001-poll-deadline-enforcement/contracts/api.md` | `- Update status to 'paused' for matching polls` | L107 |
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="codebase_search">
+<details>
+                <summary>Tool use: **codebase_search** • Searched codebase "What is the difference between paused and finalized poll status?" • **14** results</summary>
+            
+| File | Lines |
+|------|-------|
+| `packages/database/prisma/migrations/20231205043530_poll_status/migration.sql` | L49 |
+| `packages/database/prisma/migrations/20231205080854_fix_finalized_poll_status/migration.sql` | L8 |
+| `packages/database/prisma/models/poll.prisma` | L50 |
+| `apps/web/src/components/poll-status.tsx` | L52 |
+| `apps/web/src/features/poll/schema.ts` | L4 |
+| `apps/web/src/components/poll/manage-poll.tsx` | L119-274 |
+| `apps/web/src/features/poll/components/poll-status-icon.tsx` | L12-61 |
+| `apps/web/src/trpc/routers/polls.ts` | L43-1295 |
+| `apps/web/src/app/[locale]/(space)/(dashboard)/polls/polls-tabbed-view.tsx` | L56 |
+| `apps/web/src/components/poll/manage-poll/finalize-poll-dialog.tsx` | L79-260 |
+| `apps/web/src/components/poll/manage-poll.tsx` | L37-274 |
+| `specs/001-poll-deadline-enforcement/research.md` | L88-143 |
+| `specs/001-poll-deadline-enforcement/data-model.md` | L70 |
+| `apps/web/src/trpc/routers/polls.ts` | L28-1295 |
+
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+The implementation is correct: expired polls should be set to `"paused"`, not `"finalized"`.
+
+## Status meanings
+
+- `"live"`: Poll is active and accepting votes
+- `"paused"`: Poll is stopped/closed (can be resumed or finalized later)
+- `"finalized"`: Poll has been finalized with a booked event/date (has an `eventId`)
+
+## Why "paused" is correct
+
+1. Specification: The spec says to set expired polls to `"paused"`:
+   - Task T029: "Update poll status to 'paused' for expired polls"
+   - Research decision: "Use existing 'paused' status for deadline-closed polls"
+
+2. Semantics:
+   - Deadline closure = stopping new votes (paused)
+   - Finalization = booking a date/event (finalized)
+
+3. Migration logic:
+   ```sql
+   -- If "closed" is true, set to "paused"
+   -- If a poll has an "event_id", set to "finalized"
+   ```
+
+## Current implementation
+
+The code correctly sets status to `"paused"`:
+
+```typescript
+data: {
+  status: "paused",
+}
+```
+
+This matches the specification. The poll can later be finalized by the creator if they book a date, which would change it to `"finalized"`.
+
+If you're seeing polls not change to `"paused"`, check:
+1. The poll has a `deadline` that has passed
+2. The poll status is currently `"live"`
+3. The cron job is running and authenticating correctly
+
+The implementation is correct as-is.
+
+---
+
