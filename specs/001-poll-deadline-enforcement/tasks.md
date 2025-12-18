@@ -170,22 +170,22 @@
 
 ### Implementation for User Story 5
 
-- [ ] T050 [P] [US5] Create DeadlineReminderEmail template in `packages/emails/src/templates/deadline-reminder.tsx` following existing email template patterns
-- [ ] T051 [US5] Add DeadlineReminderEmail to templates.ts export in `packages/emails/src/templates.ts`
-- [ ] T052 [US5] Implement send-reminder-emails cron job endpoint in `apps/web/src/app/api/house-keeping/[...method]/route.ts` following existing house-keeping pattern
-- [ ] T053 [US5] Add query logic to find polls with deadlines in windows: 24h-23h, 6h-5h, 1h-0h before deadline in send-reminder-emails endpoint
-- [ ] T054 [US5] For each poll, query participants who have email addresses and have not voted (check votes table)
-- [ ] T055 [US5] Check Reminder table to see if participant already received reminder for this interval (pollId + participantId + reminderType)
-- [ ] T056 [US5] Group participants by email address for polls where multiple participants share same email
-- [ ] T057 [US5] Send reminder email per unique email address listing all associated participants in email content
-- [ ] T058 [US5] Create Reminder records in database to track sent reminders (pollId, participantId, reminderType, sentAt) in batches
-- [ ] T059 [US5] Handle errors gracefully in send-reminder-emails endpoint (log errors, don't block other reminders)
-- [ ] T060 [US5] Configure send-reminder-emails cron job in `apps/web/vercel.json` with schedule "0 * * * *" (every hour)
-- [ ] T061 [US5] Add i18n translation keys for reminder email content (reminderEmailSubject, reminderEmailContent) in email template
+- [x] T050 [P] [US5] Create DeadlineReminderEmail template in `packages/emails/src/templates/deadline-reminder.tsx` following existing email template patterns
+- [x] T051 [US5] Add DeadlineReminderEmail to templates.ts export in `packages/emails/src/templates.ts`
+- [x] T052 [US5] Implement send-reminder-emails cron job endpoint in `apps/web/src/app/api/house-keeping/[...method]/route.ts` following existing house-keeping pattern
+- [x] T053 [US5] Add query logic to find polls with deadlines in windows: 24h-23h, 6h-5h, 1h-0h before deadline in send-reminder-emails endpoint
+- [x] T054 [US5] For each poll, query participants who have email addresses and have not voted (check votes table)
+- [x] T055 [US5] Check Reminder table to see if participant already received reminder for this interval (pollId + participantId + reminderType)
+- [x] T056 [US5] Group participants by email address for polls where multiple participants share same email
+- [x] T057 [US5] Send reminder email per unique email address listing all associated participants in email content
+- [x] T058 [US5] Create Reminder records in database to track sent reminders (pollId, participantId, reminderType, sentAt) in batches
+- [x] T059 [US5] Handle errors gracefully in send-reminder-emails endpoint (log errors, don't block other reminders)
+- [x] T060 [US5] Configure send-reminder-emails cron job in `apps/web/vercel.json` with schedule "0 * * * *" (every hour)
+- [x] T061 [US5] Add i18n translation keys for reminder email content (reminderEmailSubject, reminderEmailContent) in email template
 
 ### QA Testing for Phase 7 (User Story 5)
 
-- [ ] T082 [P] [US5] Create Phase 7 QA test file with Gherkin scenarios in `specs/001-poll-deadline-enforcement/tests/phase-7-user-story-5.feature`
+- [x] T082 [P] [US5] Create Phase 7 QA test file with Gherkin scenarios in `specs/001-poll-deadline-enforcement/tests/phase-7-user-story-5.feature`
 - [ ] T083 [US5] Execute Phase 7 QA tests: Verify reminder emails are sent at correct intervals, duplicates are prevented, and emails contain required information, regression test Phases 3-6 (QA Stop Point - do not proceed to Phase 8 until Phases 3-7 tests pass)
 
 **Checkpoint**: At this point, all user stories should work independently - complete deadline enforcement feature is functional

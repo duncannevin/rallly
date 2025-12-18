@@ -207,4 +207,217 @@ app.get("/close-expired-polls", async (c) => {
   });
 });
 
+/**
+ * Sends reminder emails to participants who haven't responded to polls with upcoming deadlines.
+ * Reminders are sent at intervals: 24-23 hours, 6-5 hours, and 1-0 hours before the deadline.
+ */
+app.get("/send-reminder-emails", async (c) => {
+  const now = dayjs();
+  let totalRemindersSent = 0;
+  let totalPollsProcessed = 0;
+
+  // Define reminder windows: 24h-23h, 6h-5h, 1h-0h before deadline
+  const reminderIntervals = [
+    {
+      type: "twentyFourHours" as const,
+      startHours: 24,
+      endHours: 23,
+    },
+    {
+      type: "sixHours" as const,
+      startHours: 6,
+      endHours: 5,
+    },
+    {
+      type: "oneHour" as const,
+      startHours: 1,
+      endHours: 0,
+    },
+  ];
+
+  for (const interval of reminderIntervals) {
+    const startTime = now.add(interval.startHours, "hour").toDate();
+    const endTime = now.add(interval.endHours, "hour").toDate();
+
+    // Find polls with deadlines in this window
+    const pollsInWindow = await prisma.poll.findMany({
+      where: {
+        deadline: {
+          gte: endTime,
+          lte: startTime,
+          not: null,
+        },
+        status: "live",
+      },
+      select: {
+        id: true,
+        title: true,
+        deadline: true,
+        timeZone: true,
+      },
+      take: BATCH_SIZE,
+    });
+
+    totalPollsProcessed += pollsInWindow.length;
+
+    for (const poll of pollsInWindow) {
+      try {
+        // Find participants who have email addresses and have not voted
+        const nonRespondingParticipants = await prisma.participant.findMany({
+          where: {
+            pollId: poll.id,
+            email: {
+              not: null,
+            },
+            deleted: false,
+            votes: {
+              none: {}, // No votes
+            },
+            reminders: {
+              none: {
+                reminderType: interval.type,
+              },
+            },
+          },
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            locale: true,
+            timeZone: true,
+          },
+        });
+
+        if (nonRespondingParticipants.length === 0) {
+          continue;
+        }
+
+        // Group participants by email address
+        const participantsByEmail = new Map<
+          string,
+          Array<{
+            id: string;
+            name: string;
+            locale: string | null;
+            timeZone: string | null;
+          }>
+        >();
+
+        for (const participant of nonRespondingParticipants) {
+          if (!participant.email) continue;
+
+          if (!participantsByEmail.has(participant.email)) {
+            participantsByEmail.set(participant.email, []);
+          }
+
+          participantsByEmail.get(participant.email)!.push({
+            id: participant.id,
+            name: participant.name,
+            locale: participant.locale,
+            timeZone: participant.timeZone,
+          });
+        }
+
+        // Send reminder email per unique email address
+        const reminderRecords: Array<{
+          pollId: string;
+          participantId: string;
+          reminderType: "twentyFourHours" | "sixHours" | "oneHour";
+          sentAt: Date;
+        }> = [];
+
+        for (const [email, participants] of participantsByEmail) {
+          try {
+            // Use the first participant's locale/timezone for the email, or poll timezone
+            const primaryParticipant = participants[0];
+            const emailLocale = primaryParticipant.locale ?? undefined;
+            const pollTimeZone = poll.timeZone || primaryParticipant.timeZone || "UTC";
+
+            // Format deadline in the poll's timezone (parse as UTC first since stored in UTC)
+            const deadlineDate = dayjs(poll.deadline!).utc().tz(pollTimeZone);
+            const nowInPollTz = dayjs().tz(pollTimeZone);
+            const hoursRemaining = Math.floor(
+              deadlineDate.diff(nowInPollTz, "hour", true),
+            );
+
+            // Format time remaining
+            let timeRemaining: string;
+            if (hoursRemaining >= 24) {
+              const days = Math.floor(hoursRemaining / 24);
+              const hours = hoursRemaining % 24;
+              if (hours > 0) {
+                timeRemaining = `${days} day${days > 1 ? "s" : ""} and ${hours} hour${hours > 1 ? "s" : ""}`;
+              } else {
+                timeRemaining = `${days} day${days > 1 ? "s" : ""}`;
+              }
+            } else if (hoursRemaining >= 1) {
+              timeRemaining = `${hoursRemaining} hour${hoursRemaining > 1 ? "s" : ""}`;
+            } else {
+              const minutesRemaining = Math.floor(
+                deadlineDate.diff(nowInPollTz, "minute", true),
+              );
+              timeRemaining = `${minutesRemaining} minute${minutesRemaining > 1 ? "s" : ""}`;
+            }
+
+            const participantNames = participants.map((p) => p.name);
+
+            // Send email
+            const emailClient = getEmailClient(emailLocale);
+            await emailClient.queueTemplate("DeadlineReminderEmail", {
+              to: email,
+              props: {
+                title: poll.title,
+                deadline: poll.deadline!,
+                timeRemaining,
+                participantNames,
+                pollUrl: absoluteUrl(`/poll/${poll.id}`),
+              },
+            });
+
+            // Track reminder records to create
+            for (const participant of participants) {
+              reminderRecords.push({
+                pollId: poll.id,
+                participantId: participant.id,
+                reminderType: interval.type,
+                sentAt: new Date(),
+              });
+            }
+
+            totalRemindersSent++;
+          } catch (error) {
+            // Log error but don't block other emails
+            console.error(
+              `Failed to send reminder email to ${email} for poll ${poll.id}:`,
+              error,
+            );
+          }
+        }
+
+        // Create reminder records in batches
+        if (reminderRecords.length > 0) {
+          await prisma.reminder.createMany({
+            data: reminderRecords,
+            skipDuplicates: true, // In case of race conditions
+          });
+        }
+      } catch (error) {
+        // Log error but continue processing other polls
+        console.error(
+          `Failed to process reminders for poll ${poll.id}:`,
+          error,
+        );
+      }
+    }
+  }
+
+  return c.json({
+    success: true,
+    summary: {
+      remindersSent: totalRemindersSent,
+      pollsProcessed: totalPollsProcessed,
+    },
+  });
+});
+
 export const GET = handle(app);
