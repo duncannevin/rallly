@@ -42,15 +42,15 @@ export function formatDeadlineForDisplay(
     return null;
   }
 
-  const deadlineDate = dayjs(deadline);
+  // Explicitly parse as UTC first since deadline is stored in UTC
+  const deadlineDate = dayjs(deadline).utc();
   let formattedDate: string;
   
   if (timeZone) {
     const tzDate = deadlineDate.tz(timeZone);
     formattedDate = `${tzDate.format("LLL")} ${tzDate.format("z")}`;
   } else {
-    const utcDate = deadlineDate.utc();
-    formattedDate = `${utcDate.format("LLL")} UTC`;
+    formattedDate = `${deadlineDate.format("LLL")} UTC`;
   }
 
   return formattedDate;
