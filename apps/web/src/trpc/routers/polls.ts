@@ -135,6 +135,7 @@ export const polls = router({
           timeZone: true,
           createdAt: true,
           status: true,
+          deadline: true,
           guestId: true,
           user: {
             select: {
@@ -335,6 +336,8 @@ export const polls = router({
           has_location: !!location,
           has_description: !!description,
           timezone: input.timeZone,
+          has_deadline: !!deadline,
+          ...(deadline && { deadline: deadline.toISOString() }),
         },
       });
 
@@ -352,6 +355,8 @@ export const polls = router({
           hideScores: poll.hideScores,
           requireParticipantEmail: poll.requireParticipantEmail,
           isGuest: ctx.user.isGuest,
+          hasDeadline: !!deadline,
+          ...(deadline && { deadline: deadline.toISOString() }),
         },
         groups: {
           poll: poll.id,
@@ -522,6 +527,7 @@ export const polls = router({
           hideParticipants: true,
           hideScores: true,
           timeZone: true,
+          deadline: true,
           _count: {
             select: {
               participants: {
@@ -554,6 +560,7 @@ export const polls = router({
         input.disableComments !== undefined ||
         input.hideScores !== undefined ||
         input.requireParticipantEmail !== undefined;
+      const hasDeadlineUpdate = input.deadline !== undefined;
 
       if (hasDetailsUpdate) {
         ctx.posthog?.capture({
@@ -596,6 +603,35 @@ export const polls = router({
           },
           groups: {
             poll: pollId,
+          },
+        });
+      }
+
+      if (hasDeadlineUpdate) {
+        ctx.posthog?.capture({
+          event: "poll_update_deadline",
+          distinctId: ctx.user.id,
+          properties: {
+            has_deadline: !!updatedPoll.deadline,
+            ...(updatedPoll.deadline && {
+              deadline: updatedPoll.deadline.toISOString(),
+            }),
+            is_guest: ctx.user.isGuest,
+          },
+          groups: {
+            poll: pollId,
+          },
+        });
+
+        // Update group properties with deadline info
+        ctx.posthog?.groupIdentify({
+          groupType: "poll",
+          groupKey: pollId,
+          properties: {
+            has_deadline: !!updatedPoll.deadline,
+            ...(updatedPoll.deadline && {
+              deadline: updatedPoll.deadline.toISOString(),
+            }),
           },
         });
       }
