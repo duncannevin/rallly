@@ -40,6 +40,8 @@ export const getPolls = async ({
         status: true,
         createdAt: true,
         updatedAt: true,
+        deadline: true,
+        timeZone: true,
         user: {
           select: {
             id: true,
@@ -74,6 +76,8 @@ export const getPolls = async ({
     status: poll.status,
     createdAt: poll.createdAt,
     updatedAt: poll.updatedAt,
+    deadline: poll.deadline,
+    timeZone: poll.timeZone,
     user: poll.user
       ? {
           id: poll.user.id,

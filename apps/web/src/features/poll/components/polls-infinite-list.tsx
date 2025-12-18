@@ -111,6 +111,8 @@ export function PollsInfiniteList({
                 }
               : undefined
           }
+          deadline={poll.deadline ?? undefined}
+          timeZone={poll.timeZone ?? undefined}
         />
       ))}
 

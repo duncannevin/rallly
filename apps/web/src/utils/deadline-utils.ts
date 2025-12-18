@@ -1,4 +1,10 @@
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+import * as Sentry from "@sentry/nextjs";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export type DeadlineStatus = "upcoming" | "warning" | "urgent" | "passed";
 
@@ -33,6 +39,7 @@ export function calculateDeadlineStatus(deadline: Date | null): DeadlineStatus |
 /**
  * Format deadline for display with timezone conversion.
  * Converts UTC deadline to user's timezone and formats it.
+ * Handles edge cases like invalid timezones and DST transitions.
  */
 export function formatDeadlineForDisplay(
   deadline: Date | null,
@@ -42,18 +49,58 @@ export function formatDeadlineForDisplay(
     return null;
   }
 
-  // Explicitly parse as UTC first since deadline is stored in UTC
-  const deadlineDate = dayjs(deadline).utc();
-  let formattedDate: string;
-  
-  if (timeZone) {
-    const tzDate = deadlineDate.tz(timeZone);
-    formattedDate = `${tzDate.format("LLL")} ${tzDate.format("z")}`;
-  } else {
-    formattedDate = `${deadlineDate.format("LLL")} UTC`;
-  }
+  try {
+    // Explicitly parse as UTC first since deadline is stored in UTC
+    const deadlineDate = dayjs(deadline).utc();
+    let formattedDate: string;
+    
+    if (timeZone) {
+      try {
+        const tzDate = deadlineDate.tz(timeZone);
+        formattedDate = `${tzDate.format("LLL")} ${tzDate.format("z")}`;
+      } catch (error) {
+        // Handle invalid timezones and DST transition edge cases
+        console.warn(
+          `[deadline-utils] Error converting deadline to timezone "${timeZone}", falling back to UTC:`,
+          error,
+        );
+        Sentry.captureException(error, {
+          tags: {
+            component: "deadline-utils",
+            function: "formatDeadlineForDisplay",
+            errorType: "timezone-conversion",
+          },
+          extra: {
+            timeZone,
+            deadline: deadline.toISOString(),
+          },
+        });
+        // Fallback to UTC if conversion fails
+        formattedDate = `${deadlineDate.format("LLL")} UTC`;
+      }
+    } else {
+      formattedDate = `${deadlineDate.format("LLL")} UTC`;
+    }
 
-  return formattedDate;
+    return formattedDate;
+  } catch (error) {
+    console.error(
+      `[deadline-utils] Unexpected error formatting deadline:`,
+      error,
+    );
+    Sentry.captureException(error, {
+      tags: {
+        component: "deadline-utils",
+        function: "formatDeadlineForDisplay",
+      },
+      extra: {
+        deadline: deadline.toISOString(),
+        timeZone,
+      },
+    });
+    // Return a safe fallback
+    return dayjs(deadline).utc().format("LLL") + " UTC";
+  }
 }
 
 /**

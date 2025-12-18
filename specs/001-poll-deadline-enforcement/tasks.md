@@ -186,7 +186,7 @@
 ### QA Testing for Phase 7 (User Story 5)
 
 - [x] T082 [P] [US5] Create Phase 7 QA test file with Gherkin scenarios in `specs/001-poll-deadline-enforcement/tests/phase-7-user-story-5.feature`
-- [ ] T083 [US5] Execute Phase 7 QA tests: Verify reminder emails are sent at correct intervals, duplicates are prevented, and emails contain required information, regression test Phases 3-6 (QA Stop Point - do not proceed to Phase 8 until Phases 3-7 tests pass)
+- [x] T083 [US5] Execute Phase 7 QA tests: Verify reminder emails are sent at correct intervals, duplicates are prevented, and emails contain required information, regression test Phases 3-6 (QA Stop Point - do not proceed to Phase 8 until Phases 3-7 tests pass)
 
 **Checkpoint**: At this point, all user stories should work independently - complete deadline enforcement feature is functional
 
@@ -196,18 +196,18 @@
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T062 [P] Add deadline field to poll list/dashboard queries if displaying deadlines in poll lists (optional enhancement per FR-021)
-- [ ] T063 [P] Add logging for deadline enforcement operations (poll closure events, reminder sends) for monitoring
-- [ ] T064 [P] Add error handling and logging for timezone conversion edge cases (daylight saving time transitions)
-- [ ] T065 [P] Update PostHog analytics events to include deadline information in poll creation/update events
-- [ ] T066 [P] Code cleanup and refactoring (review all deadline-related code for consistency)
-- [ ] T067 [P] Run quickstart.md validation checklist to verify all implementation items are complete
+- [x] T062 [P] Add deadline field to poll list/dashboard queries if displaying deadlines in poll lists (optional enhancement per FR-021)
+- [x] T063 [P] Add logging for deadline enforcement operations (poll closure events, reminder sends) for monitoring
+- [x] T064 [P] Add error handling and logging for timezone conversion edge cases (daylight saving time transitions)
+- [x] T065 [P] Update PostHog analytics events to include deadline information in poll creation/update events
+- [x] T066 [P] Code cleanup and refactoring (review all deadline-related code for consistency)
+- [x] T067 [P] Run quickstart.md validation checklist to verify all implementation items are complete
 - [ ] T068 [P] Performance testing: Verify deadline enforcement job completes within 5 minutes, reminder job completes within time limits
 - [ ] T069 [P] Integration testing: End-to-end test of complete deadline enforcement flow (create poll → set deadline → wait for closure → verify reminders)
 
 ### QA Testing for Phase 8 (Polish)
 
-- [ ] T084 [P] Create Phase 8 QA test file with Gherkin scenarios in `specs/001-poll-deadline-enforcement/tests/phase-8-polish.feature`
+- [x] T084 [P] Create Phase 8 QA test file with Gherkin scenarios in `specs/001-poll-deadline-enforcement/tests/phase-8-polish.feature`
 - [ ] T085 Execute Phase 8 QA tests: Final regression testing of all phases, verify performance, analytics, error handling, and integration with existing features (All tests from Phases 1-7 should pass, plus Phase 8 specific tests)
 
 ---

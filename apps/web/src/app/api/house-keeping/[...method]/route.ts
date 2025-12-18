@@ -5,6 +5,7 @@ import { handle } from "hono/vercel";
 import dayjs from "dayjs";
 import { getEmailClient } from "@/utils/emails";
 import { absoluteUrl } from "@rallly/utils/absolute-url";
+import * as Sentry from "@sentry/nextjs";
 
 const BATCH_SIZE = 100;
 
@@ -128,9 +129,12 @@ app.get("/remove-deleted-polls", async (c) => {
  * Sends email notifications to poll creators when polls are closed.
  */
 app.get("/close-expired-polls", async (c) => {
+  const startTime = Date.now();
   let totalClosedPolls = 0;
   let hasMore = true;
   const now = new Date();
+
+  console.log("[close-expired-polls] Starting deadline enforcement job");
 
   while (hasMore) {
     // Find polls that have passed their deadline and are still live
@@ -173,7 +177,13 @@ app.get("/close-expired-polls", async (c) => {
       },
     });
 
+    console.log(
+      `[close-expired-polls] Closed ${expiredPolls.length} polls: ${pollIds.join(", ")}`,
+    );
+
     // Send email notifications to poll creators
+    let emailsSent = 0;
+    let emailsFailed = 0;
     for (const poll of expiredPolls) {
       if (poll.user?.email) {
         try {
@@ -186,18 +196,44 @@ app.get("/close-expired-polls", async (c) => {
               pollUrl: absoluteUrl(`/poll/${poll.id}`),
             },
           });
+          emailsSent++;
+          console.log(
+            `[close-expired-polls] Sent deadline closed email for poll ${poll.id} to ${poll.user.email}`,
+          );
         } catch (error) {
           // Log error but don't block other emails
+          emailsFailed++;
           console.error(
-            `Failed to send deadline closed email for poll ${poll.id}:`,
+            `[close-expired-polls] Failed to send deadline closed email for poll ${poll.id}:`,
             error,
           );
+          Sentry.captureException(error, {
+            tags: {
+              cronJob: "close-expired-polls",
+              pollId: poll.id,
+            },
+            extra: {
+              pollTitle: poll.title,
+              userEmail: poll.user.email,
+            },
+          });
         }
       }
     }
 
+    if (emailsFailed > 0) {
+      console.warn(
+        `[close-expired-polls] Failed to send ${emailsFailed} email(s) out of ${expiredPolls.length} polls`,
+      );
+    }
+
     totalClosedPolls += expiredPolls.length;
   }
+
+  const duration = Date.now() - startTime;
+  console.log(
+    `[close-expired-polls] Completed: closed ${totalClosedPolls} polls in ${duration}ms`,
+  );
 
   return c.json({
     success: true,
@@ -212,9 +248,12 @@ app.get("/close-expired-polls", async (c) => {
  * Reminders are sent at intervals: 24-23 hours, 6-5 hours, and 1-0 hours before the deadline.
  */
 app.get("/send-reminder-emails", async (c) => {
+  const startTime = Date.now();
   const now = dayjs();
   let totalRemindersSent = 0;
   let totalPollsProcessed = 0;
+
+  console.log("[send-reminder-emails] Starting reminder email job");
 
   // Define reminder windows: 24h-23h, 6h-5h, 1h-0h before deadline
   const reminderIntervals = [
@@ -259,6 +298,12 @@ app.get("/send-reminder-emails", async (c) => {
     });
 
     totalPollsProcessed += pollsInWindow.length;
+
+    if (pollsInWindow.length > 0) {
+      console.log(
+        `[send-reminder-emails] Processing ${pollsInWindow.length} polls in ${interval.type} window`,
+      );
+    }
 
     for (const poll of pollsInWindow) {
       try {
@@ -334,11 +379,40 @@ app.get("/send-reminder-emails", async (c) => {
             const pollTimeZone = poll.timeZone || primaryParticipant.timeZone || "UTC";
 
             // Format deadline in the poll's timezone (parse as UTC first since stored in UTC)
-            const deadlineDate = dayjs(poll.deadline!).utc().tz(pollTimeZone);
-            const nowInPollTz = dayjs().tz(pollTimeZone);
-            const hoursRemaining = Math.floor(
-              deadlineDate.diff(nowInPollTz, "hour", true),
-            );
+            let deadlineDate: dayjs.Dayjs;
+            let nowInPollTz: dayjs.Dayjs;
+            let hoursRemaining: number;
+
+            try {
+              deadlineDate = dayjs(poll.deadline!).utc().tz(pollTimeZone);
+              nowInPollTz = dayjs().tz(pollTimeZone);
+              hoursRemaining = Math.floor(
+                deadlineDate.diff(nowInPollTz, "hour", true),
+              );
+            } catch (error) {
+              // Handle invalid timezones and DST transition edge cases
+              console.warn(
+                `[send-reminder-emails] Error converting deadline to timezone "${pollTimeZone}" for poll ${poll.id}, falling back to UTC:`,
+                error,
+              );
+              Sentry.captureException(error, {
+                tags: {
+                  cronJob: "send-reminder-emails",
+                  pollId: poll.id,
+                  errorType: "timezone-conversion",
+                },
+                extra: {
+                  pollTimeZone,
+                  deadline: poll.deadline?.toISOString(),
+                },
+              });
+              // Fallback to UTC calculation
+              deadlineDate = dayjs(poll.deadline!).utc();
+              nowInPollTz = dayjs().utc();
+              hoursRemaining = Math.floor(
+                deadlineDate.diff(nowInPollTz, "hour", true),
+              );
+            }
 
             // Format time remaining
             let timeRemaining: string;
@@ -385,12 +459,26 @@ app.get("/send-reminder-emails", async (c) => {
             }
 
             totalRemindersSent++;
+            console.log(
+              `[send-reminder-emails] Sent ${interval.type} reminder to ${email} for poll ${poll.id}`,
+            );
           } catch (error) {
             // Log error but don't block other emails
             console.error(
-              `Failed to send reminder email to ${email} for poll ${poll.id}:`,
+              `[send-reminder-emails] Failed to send reminder email to ${email} for poll ${poll.id}:`,
               error,
             );
+            Sentry.captureException(error, {
+              tags: {
+                cronJob: "send-reminder-emails",
+                pollId: poll.id,
+                reminderType: interval.type,
+              },
+              extra: {
+                pollTitle: poll.title,
+                email,
+              },
+            });
           }
         }
 
@@ -404,12 +492,26 @@ app.get("/send-reminder-emails", async (c) => {
       } catch (error) {
         // Log error but continue processing other polls
         console.error(
-          `Failed to process reminders for poll ${poll.id}:`,
+          `[send-reminder-emails] Failed to process reminders for poll ${poll.id}:`,
           error,
         );
+        Sentry.captureException(error, {
+          tags: {
+            cronJob: "send-reminder-emails",
+            pollId: poll.id,
+          },
+          extra: {
+            pollTitle: poll.title,
+          },
+        });
       }
     }
   }
+
+  const duration = Date.now() - startTime;
+  console.log(
+    `[send-reminder-emails] Completed: sent ${totalRemindersSent} reminders for ${totalPollsProcessed} polls in ${duration}ms`,
+  );
 
   return c.json({
     success: true,
