@@ -14,11 +14,11 @@
     },
     {
       "path": "/api/house-keeping/close-expired-polls",
-      "schedule": "*/15 * * * *"
+      "schedule": "0 7,19 * * *"
     },
     {
       "path": "/api/house-keeping/send-reminder-emails",
-      "schedule": "0 * * * *"
+      "schedule": "0 8 * * *"
     }
   ]
 }
