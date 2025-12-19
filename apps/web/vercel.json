@@ -2,23 +2,5 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "installCommand": "pnpm install",
   "buildCommand": "cd ../.. && pnpm db:generate && pnpm build:web && pnpm db:deploy",
-  "outputDirectory": ".next",
-  "crons": [
-    {
-      "path": "/api/house-keeping/delete-inactive-polls",
-      "schedule": "0 6 * * *"
-    },
-    {
-      "path": "/api/house-keeping/remove-deleted-polls",
-      "schedule": "30 6 * * *"
-    },
-    {
-      "path": "/api/house-keeping/close-expired-polls",
-      "schedule": "0 7,19 * * *"
-    },
-    {
-      "path": "/api/house-keeping/send-reminder-emails",
-      "schedule": "0 8 * * *"
-    }
-  ]
+  "outputDirectory": ".next"
 }

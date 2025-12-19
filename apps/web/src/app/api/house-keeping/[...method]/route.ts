@@ -12,6 +12,16 @@ const BATCH_SIZE = 100;
 const app = new Hono().basePath("/api/house-keeping");
 
 app.use("*", async (c, next) => {
+  // Check if cron jobs are enabled
+  if (process.env.ENABLE_CRON_JOBS !== "true") {
+    return c.json(
+      {
+        error: "Cron jobs are disabled. Set ENABLE_CRON_JOBS=true to enable.",
+      },
+      503,
+    );
+  }
+
   if (process.env.CRON_SECRET) {
     return bearerAuth({ token: process.env.CRON_SECRET })(c, next);
   }
