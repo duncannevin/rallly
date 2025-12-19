@@ -18,7 +18,6 @@ import Link from "next/link";
 import { FeedbackMenuItem } from "@/app/[locale]/(space)/(dashboard)/components/feedback-menu-item";
 import { NavUser } from "@/app/[locale]/(space)/(dashboard)/components/nav-user";
 import { SpaceSidebarMenu } from "@/app/[locale]/(space)/(dashboard)/components/space-sidebar-menu";
-import { UpgradeMenuItem } from "@/app/[locale]/(space)/(dashboard)/components/upgrade-menu-item";
 import { requireSpace, requireUser } from "@/auth/data";
 import { Trans } from "@/components/trans";
 import { LicenseLimitWarning } from "@/features/licensing/components/license-limit-warning";
@@ -53,7 +52,6 @@ export default async function Layout({
           <SidebarGroup>
             <SidebarGroupContent>
               <SidebarMenu>
-                {activeSpace.tier === "hobby" ? <UpgradeMenuItem /> : null}
                 <IfFeatureEnabled feature="feedback">
                   <FeedbackMenuItem />
                 </IfFeatureEnabled>
@@ -88,7 +86,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const space = await requireSpace();
   return {
     title: {
-      template: `%s | ${space.name} | Rallly`,
+      template: `%s | ${space.name} | Coire`,
       default: space.name,
     },
   };

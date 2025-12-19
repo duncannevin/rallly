@@ -64,7 +64,7 @@ export const env = createEnv({
      */
     SUPPORT_EMAIL: z.email(),
     NOREPLY_EMAIL: z.email().optional(),
-    NOREPLY_EMAIL_NAME: z.string().default("Rallly"),
+    NOREPLY_EMAIL_NAME: z.string().default("Coire"),
 
     /**
      * S3 Configuration

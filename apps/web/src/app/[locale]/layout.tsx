@@ -119,8 +119,8 @@ export default async function Root({
 export async function generateMetadata(): Promise<Metadata> {
   return {
     title: {
-      template: "%s | Rallly",
-      default: "Rallly",
+      template: "%s | Coire",
+      default: "Coire",
     },
   };
 }

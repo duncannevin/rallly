@@ -25,7 +25,7 @@ export const Logo = ({
       src="/static/logo.svg"
       width={sizes[size].width}
       height={sizes[size].height}
-      alt="Rallly"
+      alt="Coire"
     />
   );
 };

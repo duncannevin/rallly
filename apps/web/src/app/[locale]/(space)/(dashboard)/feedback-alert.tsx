@@ -26,7 +26,7 @@ export function FeedbackAlert() {
         <p className="mt-1.5 opacity-75">
           <Trans
             i18nKey="helpUsImproveDesc"
-            defaults="Take a few minutes to share your feedback and help us shape the future of Rallly."
+            defaults="Take a few minutes to share your feedback and help us shape the future of Coire."
           />
         </p>
       </div>
