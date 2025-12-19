@@ -75,7 +75,7 @@ async function handleSelfHostedCheckoutSessionCompleted(
   await emailClient.sendTemplate("LicenseKeyEmail", {
     to: email,
     from: {
-      name: "Luke from Rallly",
+      name: "Luke from Coire",
       address: env.SUPPORT_EMAIL,
     },
     props: {

@@ -2676,3 +2676,2473 @@ The deadline data was already included in the query (from T062); this adds the U
 
 ---
 
+_**User (2025-12-17 15:55Z)**_
+
+remove the Upgrade to Pro button
+
+---
+
+_**Agent (model default, mode Agent)**_
+
+
+
+---
+
+
+Searching for the "Upgrade to Pro" button:
+
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="grep">
+<details>
+<summary>Tool use: **grep** • Grep for "Upgrade to Pro|upgrade.*pro|Upgrade.*Pro" in "apps/web/src" • 6 matches</summary>
+
+Output mode: content
+
+
+| File | Content | Line |
+|------|------|------|
+| `apps/web/src/features/billing/components/pay-wall-dialog.tsx` | `<Trans i18nKey="upgradePromptTitle" />` | L173 |
+| `apps/web/src/components/upgrade-button.tsx` | `\{children \|\| <Trans i18nKey="upgradeToPro" defaults="Upgrade to Pro" />\}` | L45 |
+| `apps/web/src/app/[locale]/(space)/settings/billing/page-client.tsx` | `<Trans i18nKey="upgradeToPro" />` | L134 |
+| `apps/web/src/app/[locale]/(space)/(dashboard)/components/upgrade-to-pro-alert.tsx` | `export function UpgradeToProAlert() \{` | L8 |
+| `apps/web/src/app/[locale]/(space)/(dashboard)/components/upgrade-to-pro-alert.tsx` | `i18nKey="upgradeToProDesc"` | L19 |
+| `apps/web/src/app/[locale]/(space)/(dashboard)/components/upgrade-menu-item.tsx` | `<Trans i18nKey="upgradeToPro" defaults="Upgrade to Pro" />` | L23 |
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="codebase_search">
+<details>
+                <summary>Tool use: **codebase_search** • Searched codebase "Where is the Upgrade to Pro button displayed in the UI?" • **12** results</summary>
+            
+| File | Lines |
+|------|-------|
+| `apps/web/src/app/[locale]/(space)/(dashboard)/components/upgrade-to-pro-alert.tsx` | L34 |
+| `apps/web/src/components/upgrade-button.tsx` | L48 |
+| `apps/web/src/app/[locale]/(space)/(dashboard)/components/upgrade-menu-item.tsx` | L26 |
+| `apps/web/src/app/[locale]/(space)/settings/billing/page-client.tsx` | L29-187 |
+| `apps/web/src/app/[locale]/(space)/(dashboard)/layout.tsx` | L27-94 |
+| `apps/web/src/features/billing/components/pay-wall-dialog.tsx` | L119-415 |
+| `apps/web/src/app/[locale]/(space)/(dashboard)/page.tsx` | L32-201 |
+| `apps/landing/src/components/home/hero.tsx` | L73-147 |
+| `apps/landing/src/app/[locale]/(main)/layout.tsx` | L32-124 |
+| `apps/landing/src/components/sign-up-button.tsx` | L23 |
+| `apps/landing/src/components/login-button.tsx` | L23 |
+| `apps/landing/src/app/[locale]/(main)/pricing/pricing-table.tsx` | L21-194 |
+
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+Checking where these components are used:
+
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="grep">
+<details>
+<summary>Tool use: **grep** • Grep for "UpgradeMenuItem|UpgradeToProAlert|UpgradeButton" in "apps/web/src" • 8 matches</summary>
+
+Output mode: content
+
+
+| File | Content | Line |
+|------|------|------|
+| `apps/web/src/features/billing/components/pay-wall-dialog.tsx` | `import \{ UpgradeButton \} from "@/components/upgrade-button";` | L33 |
+| `apps/web/src/features/billing/components/pay-wall-dialog.tsx` | `<UpgradeButton className="w-full" annual=\{isAnnual\}>` | L241 |
+| `apps/web/src/features/billing/components/pay-wall-dialog.tsx` | `</UpgradeButton>` | L243 |
+| `apps/web/src/components/upgrade-button.tsx` | `export const UpgradeButton = (\{` | L8 |
+| `apps/web/src/app/[locale]/(space)/(dashboard)/layout.tsx` | `import \{ UpgradeMenuItem \} from "@/app/[locale]/(space)/(dashboard)/components/upgrade-menu-item";` | L21 |
+| `apps/web/src/app/[locale]/(space)/(dashboard)/layout.tsx` | `\{activeSpace.tier === "hobby" ? <UpgradeMenuItem /> : null\}` | L56 |
+| `apps/web/src/app/[locale]/(space)/(dashboard)/components/upgrade-to-pro-alert.tsx` | `export function UpgradeToProAlert() \{` | L8 |
+| `apps/web/src/app/[locale]/(space)/(dashboard)/components/upgrade-menu-item.tsx` | `export function UpgradeMenuItem() \{` | L9 |
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/duncannevin/Documents/rallly/apps/web/src/app/[locale]/(space)/(dashboard)/layout.tsx</summary>
+
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+Removing the "Upgrade to Pro" button from the sidebar:
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="search_replace">
+
+<details><summary>Tool use: **search_replace** • Edit file: /Users/duncannevin/Documents/rallly/apps/web/src/app/[locale]/(space)/(dashboard)/layout.tsx</summary>
+
+**Chunk 1**
+Lines added: undefined, lines removed: 1
+
+```diff
+@@ -19,5 +19,4 @@
+  import { NavUser } from "@/app/[locale]/(space)/(dashboard)/components/nav-user";
+  import { SpaceSidebarMenu } from "@/app/[locale]/(space)/(dashboard)/components/space-sidebar-menu";
+- import { UpgradeMenuItem } from "@/app/[locale]/(space)/(dashboard)/components/upgrade-menu-item";
+  import { requireSpace, requireUser } from "@/auth/data";
+  import { Trans } from "@/components/trans";
+```
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="search_replace">
+
+<details><summary>Tool use: **search_replace** • Edit file: /Users/duncannevin/Documents/rallly/apps/web/src/app/[locale]/(space)/(dashboard)/layout.tsx</summary>
+
+**Chunk 1**
+Lines added: undefined, lines removed: 1
+
+```diff
+@@ -53,5 +53,4 @@
+              &lt;SidebarGroupContent&gt;
+                &lt;SidebarMenu&gt;
+-                 {activeSpace.tier === "hobby" ? &lt;UpgradeMenuItem /&gt; : null}
+                  &lt;IfFeatureEnabled feature="feedback"&gt;
+                    &lt;FeedbackMenuItem /&gt;
+```
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="generic" data-tool-name="read_lints">
+<details>
+          <summary>Tool use: **read_lints** • Read lints for 1 file</summary>
+      
+Lint paths:
+
+- `apps/web/src/app/[locale]/(space)/(dashboard)/layout.tsx`
+
+Lint results
+
+
+**No lint errors found**
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+Removed the "Upgrade to Pro" button from the sidebar. Changes:
+
+1. Removed the import for `UpgradeMenuItem`
+2. Removed the conditional rendering of `<UpgradeMenuItem />` from the sidebar menu
+
+The button no longer appears in the dashboard sidebar. The upgrade functionality may still exist in other places (e.g., billing page, paywall dialog), but it’s removed from the main sidebar navigation.
+
+---
+
+_**User (2025-12-17 15:55Z)**_
+
+rebrand the app from rally to coire
+
+---
+
+_**Agent (model default, mode Agent)**_
+
+
+
+---
+
+
+Searching for "rally" references to rebrand to "coire":
+
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="grep">
+<details>
+<summary>Tool use: **grep** • Grep for "rally|Rally|RALLY" in "apps/web" • 0 matches</summary>
+
+Output mode: files_with_matches
+
+
+_No matches found_
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="grep">
+<details>
+<summary>Tool use: **grep** • Grep for "rallly|Rallly|RALLY" in "apps/web" • 320 matches</summary>
+
+Output mode: files_with_matches
+
+
+| File |
+|------|
+| `apps/web/src/app/[locale]/(space)/(dashboard)/layout.tsx` |
+| `apps/web/src/features/poll/components/polls-infinite-list.tsx` |
+| `apps/web/src/features/poll/components/poll-list.tsx` |
+| `apps/web/src/app/api/house-keeping/[...method]/route.ts` |
+| `apps/web/src/trpc/routers/polls.ts` |
+| `apps/web/src/features/poll/data.ts` |
+| `apps/web/src/components/poll/mutations.ts` |
+| `apps/web/src/components/forms/poll-settings.tsx` |
+| `apps/web/src/components/forms/poll-details-form.tsx` |
+| `apps/web/src/components/forms/deadline-edit-picker.tsx` |
+| `apps/web/src/app/[locale]/(optional-space)/poll/[urlId]/edit-settings/page.tsx` |
+| `apps/web/src/app/[locale]/(optional-space)/poll/[urlId]/edit-details/page.tsx` |
+| `apps/web/src/trpc/routers/polls/participants.ts` |
+| `apps/web/src/components/event-card.tsx` |
+| `apps/web/src/components/deadline-display.tsx` |
+| `apps/web/src/trpc/client/types.ts` |
+| `apps/web/src/components/forms/deadline-picker.tsx` |
+| `apps/web/src/components/create-poll.tsx` |
+| `apps/web/src/lib/auth.ts` |
+| `apps/web/package.json` |
+| `apps/web/tsconfig.json` |
+| `apps/web/tests/vote-and-comment.spec.ts` |
+| `apps/web/tests/test-utils.ts` |
+| `apps/web/tests/house-keeping.spec.ts` |
+| `apps/web/tests/guest-to-user-migration.spec.ts` |
+| `apps/web/tests/control-panel.spec.ts` |
+| `apps/web/tests/authentication.spec.ts` |
+| `apps/web/tests/admin-setup.spec.ts` |
+| `apps/web/tailwind.config.js` |
+| `apps/web/src/utils/session/session-config.ts` |
+| `apps/web/src/utils/ics.ts` |
+| `apps/web/src/utils/ics.test.ts` |
+| `apps/web/src/utils/emails.ts` |
+| `apps/web/src/utils/dayjs.tsx` |
+| `apps/web/src/trpc/trpc.ts` |
+| `apps/web/src/trpc/routers/user.ts` |
+| `apps/web/src/trpc/routers/polls/comments.ts` |
+| `apps/web/src/trpc/client/provider.tsx` |
+| `apps/web/src/next-auth.ts` |
+| `apps/web/src/lib/timezone/formatted-date-time-server.tsx` |
+| `apps/web/src/lib/safe-action/client.ts` |
+| `apps/web/src/lib/locale/server.ts` |
+| `apps/web/src/lib/locale/constants.ts` |
+| `apps/web/src/lib/locale/client.tsx` |
+| `apps/web/src/i18n/settings.ts` |
+| `apps/web/src/i18n/server/get-locale.ts` |
+| `apps/web/src/features/user/queries.ts` |
+| `apps/web/src/features/user/mutations.ts` |
+| `apps/web/src/features/user/data.ts` |
+| `apps/web/src/features/user/actions.ts` |
+| `apps/web/src/features/user/ability.ts` |
+| `apps/web/src/features/space/mutations.ts` |
+| `apps/web/src/features/space/data.ts` |
+| `apps/web/src/features/space/components/space-icon.tsx` |
+| `apps/web/src/features/space/components/space-dropdown.tsx` |
+| `apps/web/src/features/space/components/create-space-dialog.tsx` |
+| `apps/web/src/features/space/client.tsx` |
+| `apps/web/src/features/space/actions.ts` |
+| `apps/web/src/features/setup/utils.ts` |
+| `apps/web/src/features/setup/components/create-space-form.tsx` |
+| `apps/web/src/features/scheduled-event/data.ts` |
+| `apps/web/src/features/scheduled-event/components/scheduled-event-status-badge.tsx` |
+| `apps/web/src/features/scheduled-event/components/scheduled-event-list.tsx` |
+| `apps/web/src/features/scheduled-event/actions.ts` |
+| `apps/web/src/features/quick-create/quick-create-widget.tsx` |
+| `apps/web/src/features/quick-create/quick-create-button.tsx` |
+| `apps/web/src/features/quick-create/lib/get-guest-polls.ts` |
+| `apps/web/src/features/poll/query.ts` |
+| `apps/web/src/features/poll/helpers.ts` |
+| `apps/web/src/features/poll/components/poll-status-icon.tsx` |
+| `apps/web/src/features/password/components/password-strength-meter.tsx` |
+| `apps/web/src/features/navigation/command-menu/command-menu.tsx` |
+| `apps/web/src/features/licensing/lib/licensing-manager.ts` |
+| `apps/web/src/features/licensing/data.ts` |
+| `apps/web/src/features/licensing/components/remove-license-button.tsx` |
+| `apps/web/src/features/licensing/components/license-limit-warning.tsx` |
+| `apps/web/src/features/licensing/components/license-key-form.tsx` |
+| `apps/web/src/features/licensing/actions/validate-license.ts` |
+| `apps/web/src/features/licensing/actions.ts` |
+| `apps/web/src/features/instance-settings/queries.ts` |
+| `apps/web/src/features/feedback/components/feedback-dialog.tsx` |
+| `apps/web/src/features/feedback/actions.ts` |
+| `apps/web/src/features/credentials/queries.ts` |
+| `apps/web/src/features/credentials/mutations.ts` |
+| `apps/web/src/features/calendars/queries.ts` |
+| `apps/web/src/features/calendars/mutations.ts` |
+| `apps/web/src/features/billing/utils.ts` |
+| `apps/web/src/features/billing/data.ts` |
+| `apps/web/src/features/billing/constants.ts` |
+| `apps/web/src/features/billing/components/subscription-status-label.tsx` |
+| `apps/web/src/features/billing/components/pay-wall-dialog.tsx` |
+| `apps/web/src/features/billing/client.tsx` |
+| `apps/web/src/features/analytics/posthog.ts` |
+| `apps/web/src/env.ts` |
+| `apps/web/src/contexts/preferences.tsx` |
+| `apps/web/src/components/vote-summary-progress-bar.tsx` |
+| `apps/web/src/components/user.tsx` |
+| `apps/web/src/components/user-dropdown.tsx` |
+| `apps/web/src/components/upgrade-button.tsx` |
+| `apps/web/src/components/time-zone-picker/time-zone-select.tsx` |
+| `apps/web/src/components/time-format-picker.tsx` |
+| `apps/web/src/components/table/table-column-header.tsx` |
+| `apps/web/src/components/steps/steps.tsx` |
+| `apps/web/src/components/stacked-list.tsx` |
+| `apps/web/src/components/spinner.tsx` |
+| `apps/web/src/components/skeleton.tsx` |
+| `apps/web/src/components/router-loading-indicator.tsx` |
+| `apps/web/src/components/pro-badge.tsx` |
+| `apps/web/src/components/poll/you-avatar.tsx` |
+| `apps/web/src/components/poll/voting-form.tsx` |
+| `apps/web/src/components/poll/vote-selector.tsx` |
+| `apps/web/src/components/poll/vote-icon.tsx` |
+| `apps/web/src/components/poll/types.ts` |
+| `apps/web/src/components/poll/truncated-linkify.tsx` |
+| `apps/web/src/components/poll/score-summary.tsx` |
+| `apps/web/src/components/poll/scheduled-event.tsx` |
+| `apps/web/src/components/poll/poll-view-tracker.tsx` |
+| `apps/web/src/components/poll/poll-footer.tsx` |
+| `apps/web/src/components/poll/notifications-toggle.tsx` |
+| `apps/web/src/components/poll/mobile-poll/poll-options.tsx` |
+| `apps/web/src/components/poll/mobile-poll/poll-option.tsx` |
+| `apps/web/src/components/poll/mobile-poll/grouped-options.tsx` |
+| `apps/web/src/components/poll/mobile-poll.tsx` |
+| `apps/web/src/components/poll/manage-poll/finalize-poll-dialog.tsx` |
+| `apps/web/src/components/poll/manage-poll/delete-poll-dialog.tsx` |
+| `apps/web/src/components/poll/manage-poll.tsx` |
+| `apps/web/src/components/poll/language-selector.tsx` |
+| `apps/web/src/components/poll/desktop-poll/poll-header.tsx` |
+| `apps/web/src/components/poll/desktop-poll/participant-row.tsx` |
+| `apps/web/src/components/poll/desktop-poll/participant-row-form.tsx` |
+| `apps/web/src/components/poll/desktop-poll.tsx` |
+| `apps/web/src/components/poll-status.tsx` |
+| `apps/web/src/components/poll-context.tsx` |
+| `apps/web/src/components/participants-provider.tsx` |
+| `apps/web/src/components/participant.tsx` |
+| `apps/web/src/components/participant-dropdown.tsx` |
+| `apps/web/src/components/participant-avatar-bar.tsx` |
+| `apps/web/src/components/pagination.tsx` |
+| `apps/web/src/components/optimized-avatar-image.tsx` |
+| `apps/web/src/components/new-participant-modal.tsx` |
+| `apps/web/src/components/modal/modal.tsx` |
+| `apps/web/src/components/member-selector.tsx` |
+| `apps/web/src/components/logo.tsx` |
+| `apps/web/src/components/layouts/timezone-control.tsx` |
+| `apps/web/src/components/layouts/timeformat.tsx` |
+| `apps/web/src/components/layouts/poll-layout.tsx` |
+| `apps/web/src/components/invite-dialog.tsx` |
+| `apps/web/src/components/input-otp.tsx` |
+| `apps/web/src/components/image-upload/image-upload.tsx` |
+| `apps/web/src/components/image-upload/image-crop-dialog.tsx` |
+| `apps/web/src/components/full-width-layout.tsx` |
+| `apps/web/src/components/forms/poll-options-form/poll-options-form.tsx` |
+| `apps/web/src/components/forms/poll-options-form/month-calendar/time-picker.tsx` |
+| `apps/web/src/components/forms/poll-options-form/month-calendar/month-calendar.tsx` |
+| `apps/web/src/components/forms/poll-options-form/date-navigation-toolbar.tsx` |
+| `apps/web/src/components/error-page.tsx` |
+| `apps/web/src/components/empty-state.tsx` |
+| `apps/web/src/components/discussion/discussion.tsx` |
+| `apps/web/src/components/description-list.tsx` |
+| `apps/web/src/components/date-icon.tsx` |
+| `apps/web/src/components/date-card.tsx` |
+| `apps/web/src/components/copy-link-button.tsx` |
+| `apps/web/src/components/cookie-consent.tsx` |
+| `apps/web/src/components/container.tsx` |
+| `apps/web/src/components/clock.tsx` |
+| `apps/web/src/components/add-to-calendar-button.tsx` |
+| `apps/web/src/auth/providers/guest.ts` |
+| `apps/web/src/auth/helpers/merge-user.ts` |
+| `apps/web/src/auth/helpers/is-email-blocked.ts` |
+| `apps/web/src/auth/data.ts` |
+| `apps/web/src/app/posthog-page-view.tsx` |
+| `apps/web/src/app/components/settings-layout.tsx` |
+| `apps/web/src/app/components/search-input.tsx` |
+| `apps/web/src/app/components/page-tabs.tsx` |
+| `apps/web/src/app/components/page-layout.tsx` |
+| `apps/web/src/app/api/user/verify-email-change/route.ts` |
+| `apps/web/src/app/api/trpc/[trpc]/route.ts` |
+| `apps/web/src/app/api/stripe/webhook/route.ts` |
+| `apps/web/src/app/api/stripe/webhook/handlers/utils.ts` |
+| `apps/web/src/app/api/stripe/webhook/handlers/payment-method/updated.ts` |
+| `apps/web/src/app/api/stripe/webhook/handlers/payment-method/detached.ts` |
+| `apps/web/src/app/api/stripe/webhook/handlers/payment-method/attached.ts` |
+| `apps/web/src/app/api/stripe/webhook/handlers/index.ts` |
+| `apps/web/src/app/api/stripe/webhook/handlers/customer/deleted.ts` |
+| `apps/web/src/app/api/stripe/webhook/handlers/customer/created.ts` |
+| `apps/web/src/app/api/stripe/webhook/handlers/customer-subscription/updated.ts` |
+| `apps/web/src/app/api/stripe/webhook/handlers/customer-subscription/deleted.ts` |
+| `apps/web/src/app/api/stripe/webhook/handlers/customer-subscription/created.ts` |
+| `apps/web/src/app/api/stripe/webhook/handlers/checkout/expired.ts` |
+| `apps/web/src/app/api/stripe/webhook/handlers/checkout/completed.ts` |
+| `apps/web/src/app/api/stripe/portal/helpers/create-portal-session.ts` |
+| `apps/web/src/app/api/stripe/checkout/route.ts` |
+| `apps/web/src/app/api/stripe/buy-license/route.ts` |
+| `apps/web/src/app/api/status/route.ts` |
+| `apps/web/src/app/api/notifications/unsubscribe/route.ts` |
+| `apps/web/src/app/api/licensing/v1/[...route]/route.ts` |
+| `apps/web/src/app/[locale]/timezone-change-detector.tsx` |
+| `apps/web/src/app/[locale]/quick-create/page.tsx` |
+| `apps/web/src/app/[locale]/poll/[urlId]/duplicate-dialog.tsx` |
+| `apps/web/src/app/[locale]/p/[participantUrlId]/page.tsx` |
+| `apps/web/src/app/[locale]/not-found.tsx` |
+| `apps/web/src/app/[locale]/layout.tsx` |
+| `apps/web/src/app/[locale]/invite/[urlId]/page.tsx` |
+| `apps/web/src/app/[locale]/invite/[urlId]/invite-page.tsx` |
+| `apps/web/src/app/[locale]/control-panel/users/users-tabbed-view.tsx` |
+| `apps/web/src/app/[locale]/control-panel/users/user-row.tsx` |
+| `apps/web/src/app/[locale]/control-panel/users/page.tsx` |
+| `apps/web/src/app/[locale]/control-panel/users/dialogs/delete-user-dialog.tsx` |
+| `apps/web/src/app/[locale]/control-panel/sidebar.tsx` |
+| `apps/web/src/app/[locale]/control-panel/settings/instance-settings-form.tsx` |
+| `apps/web/src/app/[locale]/control-panel/settings/actions.ts` |
+| `apps/web/src/app/[locale]/control-panel/page.tsx` |
+| `apps/web/src/app/[locale]/control-panel/nav-item.tsx` |
+| `apps/web/src/app/[locale]/control-panel/license/page.tsx` |
+| `apps/web/src/app/[locale]/control-panel/layout.tsx` |
+| `apps/web/src/app/[locale]/control-panel/control-panel-sidebar-provider.tsx` |
+| `apps/web/src/app/[locale]/admin/[adminUrlId]/page.tsx` |
+| `apps/web/src/app/[locale]/admin-setup/page.tsx` |
+| `apps/web/src/app/[locale]/admin-setup/make-me-admin-button.tsx` |
+| `apps/web/src/app/[locale]/admin-setup/actions.ts` |
+| `apps/web/src/app/[locale]/accept-invite/[inviteId]/page.tsx` |
+| `apps/web/src/app/[locale]/accept-invite/[inviteId]/components/sign-out-button.tsx` |
+| `apps/web/src/app/[locale]/accept-invite/[inviteId]/components/accept-invite-button.tsx` |
+| `apps/web/src/app/[locale]/(space)/settings/spaces/components/spaces-list.tsx` |
+| `apps/web/src/app/[locale]/(space)/settings/spaces/components/leave-space-dialog.tsx` |
+| `apps/web/src/app/[locale]/(space)/settings/security/page.tsx` |
+| `apps/web/src/app/[locale]/(space)/settings/security/components/setup-password-form.tsx` |
+| `apps/web/src/app/[locale]/(space)/settings/security/components/change-password-form.tsx` |
+| `apps/web/src/app/[locale]/(space)/settings/profile/profile-settings.tsx` |
+| `apps/web/src/app/[locale]/(space)/settings/profile/profile-picture.tsx` |
+| `apps/web/src/app/[locale]/(space)/settings/profile/profile-email-address.tsx` |
+| `apps/web/src/app/[locale]/(space)/settings/profile/page.tsx` |
+| `apps/web/src/app/[locale]/(space)/settings/profile/delete-account-dialog.tsx` |
+| `apps/web/src/app/[locale]/(space)/settings/profile/actions.ts` |
+| `apps/web/src/app/[locale]/(space)/settings/preferences/components/language-preference.tsx` |
+| `apps/web/src/app/[locale]/(space)/settings/preferences/components/date-time-preferences.tsx` |
+| `apps/web/src/app/[locale]/(space)/settings/preferences/actions.ts` |
+| `apps/web/src/app/[locale]/(space)/settings/members/page.tsx` |
+| `apps/web/src/app/[locale]/(space)/settings/members/components/member-dropdown-menu.tsx` |
+| `apps/web/src/app/[locale]/(space)/settings/members/components/invite-member-dialog.tsx` |
+| `apps/web/src/app/[locale]/(space)/settings/members/components/invite-member-button.tsx` |
+| `apps/web/src/app/[locale]/(space)/settings/members/components/invite-dropdown-menu.tsx` |
+| `apps/web/src/app/[locale]/(space)/settings/layout.tsx` |
+| `apps/web/src/app/[locale]/(space)/settings/general/page.tsx` |
+| `apps/web/src/app/[locale]/(space)/settings/general/components/space-settings-form.tsx` |
+| `apps/web/src/app/[locale]/(space)/settings/general/components/leave-space-button.tsx` |
+| `apps/web/src/app/[locale]/(space)/settings/general/components/delete-space-button.tsx` |
+| `apps/web/src/app/[locale]/(space)/settings/components/sidebar.tsx` |
+| `apps/web/src/app/[locale]/(space)/settings/components/settings-layout.tsx` |
+| `apps/web/src/app/[locale]/(space)/settings/calendars/components/default-calendar-select.tsx` |
+| `apps/web/src/app/[locale]/(space)/settings/calendars/components/connect-calendar-dropdown.tsx` |
+| `apps/web/src/app/[locale]/(space)/settings/calendars/components/calendar-connection-list.tsx` |
+| `apps/web/src/app/[locale]/(space)/settings/billing/page-client.tsx` |
+| `apps/web/src/app/[locale]/(space)/settings/billing/components/manage-seats-dialog.tsx` |
+| `apps/web/src/app/[locale]/(space)/mobile-navigation.tsx` |
+| `apps/web/src/app/[locale]/(space)/(dashboard)/polls/polls-tabbed-view.tsx` |
+| `apps/web/src/app/[locale]/(space)/(dashboard)/polls/page.tsx` |
+| `apps/web/src/app/[locale]/(space)/(dashboard)/password-setup-alert.tsx` |
+| `apps/web/src/app/[locale]/(space)/(dashboard)/page.tsx` |
+| `apps/web/src/app/[locale]/(space)/(dashboard)/feedback-alert.tsx` |
+| `apps/web/src/app/[locale]/(space)/(dashboard)/events/events-tabbed-view.tsx` |
+| `apps/web/src/app/[locale]/(space)/(dashboard)/events/events-infinite-list.tsx` |
+| `apps/web/src/app/[locale]/(space)/(dashboard)/components/upgrade-to-pro-alert.tsx` |
+| `apps/web/src/app/[locale]/(space)/(dashboard)/components/upgrade-menu-item.tsx` |
+| `apps/web/src/app/[locale]/(space)/(dashboard)/components/top-bar.tsx` |
+| `apps/web/src/app/[locale]/(space)/(dashboard)/components/space-sidebar-provider.tsx` |
+| `apps/web/src/app/[locale]/(space)/(dashboard)/components/space-sidebar-menu.tsx` |
+| `apps/web/src/app/[locale]/(space)/(dashboard)/components/nav-user.tsx` |
+| `apps/web/src/app/[locale]/(space)/(dashboard)/components/feedback-menu-item.tsx` |
+| `apps/web/src/app/[locale]/(optional-space)/poll/[urlId]/unsubscribe-alert.tsx` |
+| `apps/web/src/app/[locale]/(optional-space)/poll/[urlId]/layout.tsx` |
+| `apps/web/src/app/[locale]/(optional-space)/poll/[urlId]/guest-poll-alert.tsx` |
+| `apps/web/src/app/[locale]/(optional-space)/poll/[urlId]/edit-options/page.tsx` |
+| `apps/web/src/app/[locale]/(optional-space)/poll/[urlId]/duplicate-form.tsx` |
+| `apps/web/src/app/[locale]/(optional-space)/poll/[urlId]/duplicate-dialog.tsx` |
+| `apps/web/src/app/[locale]/(optional-space)/new/page.tsx` |
+| `apps/web/src/app/[locale]/(optional-space)/new/back-button.tsx` |
+| `apps/web/src/app/[locale]/(auth)/reset-password/components/reset-password-form.tsx` |
+| `apps/web/src/app/[locale]/(auth)/register/components/register-name-form.tsx` |
+| `apps/web/src/app/[locale]/(auth)/login/verify/page.tsx` |
+| `apps/web/src/app/[locale]/(auth)/login/verify/components/otp-form.tsx` |
+| `apps/web/src/app/[locale]/(auth)/login/components/sso-provider.tsx` |
+| `apps/web/src/app/[locale]/(auth)/login/components/login-with-oidc.tsx` |
+| `apps/web/src/app/[locale]/(auth)/login/components/login-email-form.tsx` |
+| `apps/web/src/app/[locale]/(auth)/login/actions.ts` |
+| `apps/web/src/app/[locale]/(auth)/layout.tsx` |
+| `apps/web/src/app/[locale]/(auth)/forgot-password/components/forgot-password-form.tsx` |
+| `apps/web/src/actions/track-poll-view.ts` |
+| `apps/web/public/manifest.json` |
+| `apps/web/public/locales/zh/app.json` |
+| `apps/web/public/locales/zh-Hant/app.json` |
+| `apps/web/public/locales/vi/app.json` |
+| `apps/web/public/locales/tr/app.json` |
+| `apps/web/public/locales/sv/app.json` |
+| `apps/web/public/locales/sk/app.json` |
+| `apps/web/public/locales/ru/app.json` |
+| `apps/web/public/locales/pt/app.json` |
+| `apps/web/public/locales/pt-BR/app.json` |
+| `apps/web/public/locales/pl/app.json` |
+| `apps/web/public/locales/no/app.json` |
+| `apps/web/public/locales/nl/app.json` |
+| `apps/web/public/locales/ko/app.json` |
+| `apps/web/public/locales/ja/app.json` |
+| `apps/web/public/locales/it/app.json` |
+| `apps/web/public/locales/hu/app.json` |
+| `apps/web/public/locales/hr/app.json` |
+| `apps/web/public/locales/fr/app.json` |
+| `apps/web/public/locales/fi/app.json` |
+| `apps/web/public/locales/eu/app.json` |
+| `apps/web/public/locales/es/app.json` |
+| `apps/web/public/locales/en/app.json` |
+| `apps/web/public/locales/de/app.json` |
+| `apps/web/public/locales/da/app.json` |
+| `apps/web/public/locales/cs/app.json` |
+| `apps/web/public/locales/ca/app.json` |
+| `apps/web/next.config.js` |
+| `apps/web/i18n.config.js` |
+| `apps/web/declarations/next-auth.d.ts` |
+| `apps/web/declarations/i18next.d.ts` |
+| `apps/web/Dockerfile` |
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="codebase_search">
+<details>
+                <summary>Tool use: **codebase_search** • Searched codebase "Where is the app name and branding displayed in the UI?" • **15** results</summary>
+            
+| File | Lines |
+|------|-------|
+| `apps/landing/src/app/[locale]/(main)/layout.tsx` | L27-124 |
+| `apps/web/src/app/[locale]/layout.tsx` | L63-125 |
+| `apps/web/src/app/components/page-layout.tsx` | L8-51 |
+| `apps/web/src/app/[locale]/(space)/(dashboard)/layout.tsx` | L82-92 |
+| `apps/web/src/app/[locale]/(space)/(dashboard)/layout.tsx` | L27-92 |
+| `apps/web/src/app/components/logo-link.tsx` | L12 |
+| `apps/web/src/components/logo.tsx` | L30 |
+| `apps/web/src/app/[locale]/(space)/(dashboard)/components/top-bar.tsx` | L23 |
+| `apps/web/src/app/[locale]/control-panel/page.tsx` | L24-139 |
+| `apps/web/src/app/components/full-logo-link.tsx` | L12 |
+| `apps/web/src/app/[locale]/(auth)/layout.tsx` | L44 |
+| `apps/web/src/app/components/settings-layout.tsx` | L18-61 |
+| `apps/landing/src/app/[locale]/(main)/page.tsx` | L50 |
+| `apps/web/src/components/full-width-layout.tsx` | L23-44 |
+| `apps/web/src/app/[locale]/accept-invite/[inviteId]/page.tsx` | L9-137 |
+
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+Checking key branding locations:
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/duncannevin/Documents/rallly/apps/web/src/app/[locale]/layout.tsx</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/duncannevin/Documents/rallly/apps/web/src/app/[locale]/(space)/(dashboard)/layout.tsx</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/duncannevin/Documents/rallly/apps/web/src/components/logo.tsx</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="grep">
+<details>
+<summary>Tool use: **grep** • Grep for "Rallly|rallly\.co|support\.rallly" in "apps/web/src" • 34 matches</summary>
+
+Output mode: content
+
+
+| File | Content | Line |
+|------|------|------|
+| `apps/web/src/app/[locale]/(space)/(dashboard)/layout.tsx` | `template: `%s \| $\{space.name\} \| Rallly`,` | L89 |
+| `apps/web/src/trpc/routers/polls.ts` | `const uid = `$\{eventId\}@rallly.co`;` | L986 |
+| `apps/web/src/trpc/routers/polls.ts` | `uid: `$\{eventId\}@rallly.co`,` | L1024 |
+| `apps/web/src/lib/auth.ts` | `appName: "Rallly",` | L74 |
+| `apps/web/src/lib/auth.ts` | `emailDomainName: "rallly.co",` | L115 |
+| `apps/web/src/utils/ics.ts` | `const productId = "-//Rallly//EN";` | L3 |
+| `apps/web/src/utils/ics.test.ts` | `uid: "test-uid-123@rallly.co",` | L5 |
+| `apps/web/src/utils/ics.test.ts` | `expect(result.value).toContain("UID:test-uid-123@rallly.co");` | L153 |
+| `apps/web/src/utils/ics.test.ts` | `expect(result.value).toContain("PRODID:-//Rallly//EN");` | L162 |
+| `apps/web/src/utils/ics.test.ts` | `uid: "minimal@rallly.co",` | L167 |
+| `apps/web/src/utils/ics.test.ts` | `expect(result.value).toContain("UID:minimal@rallly.co");` | L175 |
+| `apps/web/src/utils/ics.test.ts` | `uid: "defaults@rallly.co",` | L181 |
+| `apps/web/src/features/licensing/lib/licensing-manager.ts` | `apiUrl = "https://licensing.rallly.co/api/licensing/v1",` | L15 |
+| `apps/web/src/features/licensing/components/license-limit-warning.tsx` | `href="https://support.rallly.co/self-hosting/licensing"` | L32 |
+| `apps/web/src/features/feedback/actions.ts` | `to: "feedback@rallly.co",` | L20 |
+| `apps/web/src/env.ts` | `NOREPLY_EMAIL_NAME: z.string().default("Rallly"),` | L67 |
+| `apps/web/src/components/user-dropdown.tsx` | `href="https://support.rallly.co"` | L105 |
+| `apps/web/src/components/poll/poll-footer.tsx` | `i18nKey="poweredByRallly"` | L10 |
+| `apps/web/src/components/poll/poll-footer.tsx` | `values=\{{ name: "rallly.co" \}}` | L11 |
+| `apps/web/src/components/poll/poll-footer.tsx` | `href="https://rallly.co"` | L16 |
+| `apps/web/src/components/logo.tsx` | `alt="Rallly"` | L28 |
+| `apps/web/src/components/error-page.tsx` | `href="https://support.rallly.co"` | L36 |
+| `apps/web/src/app/api/stripe/webhook/handlers/checkout/completed.ts` | `name: "Luke from Rallly",` | L78 |
+| `apps/web/src/app/api/stripe/buy-license/route.ts` | `success_url: "https://rallly.co/licensing/thank-you",` | L71 |
+| `apps/web/src/app/[locale]/not-found.tsx` | `href="https://support.rallly.co"` | L28 |
+| `apps/web/src/app/[locale]/layout.tsx` | `email: `$\{session.user.id\}@rallly.co`,` | L49 |
+| `apps/web/src/app/[locale]/layout.tsx` | `template: "%s \| Rallly",` | L122 |
+| `apps/web/src/app/[locale]/layout.tsx` | `default: "Rallly",` | L123 |
+| `apps/web/src/app/[locale]/control-panel/license/page.tsx` | `href="https://support.rallly.co/self-hosting/licensing"` | L137 |
+| `apps/web/src/app/[locale]/(space)/settings/preferences/components/language-preference.tsx` | `href="https://support.rallly.co/contribute/translations"` | L64 |
+| `apps/web/src/app/[locale]/(space)/settings/members/page.tsx` | `href="https://support.rallly.co/self-hosting/licensing"` | L184 |
+| `apps/web/src/app/[locale]/(space)/settings/billing/page-client.tsx` | `<a href="mailto:support@rallly.co">` | L177 |
+| `apps/web/src/app/[locale]/(space)/(dashboard)/feedback-alert.tsx` | `defaults="Take a few minutes to share your feedback and help us shape the future of Rallly."` | L29 |
+| `apps/web/src/app/[locale]/(space)/(dashboard)/feedback-alert.tsx` | `href="https://www.trustpilot.com/evaluate/rallly.co"` | L45 |
+
+
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+Updating user-facing branding from "Rallly" to "Coire", focusing on display text and metadata:
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="search_replace">
+
+<details><summary>Tool use: **search_replace** • Edit file: /Users/duncannevin/Documents/rallly/apps/web/src/app/[locale]/layout.tsx</summary>
+
+**Chunk 1**
+Lines added: 2, lines removed: 2
+
+```diff
+@@ -120,6 +120,6 @@
+    return {
+      title: {
+-       template: "%s | Rallly",
+-       default: "Rallly",
++       template: "%s | Coire",
++       default: "Coire",
+      },
+    };
+```
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="search_replace">
+
+<details><summary>Tool use: **search_replace** • Edit file: /Users/duncannevin/Documents/rallly/apps/web/src/app/[locale]/(space)/(dashboard)/layout.tsx</summary>
+
+**Chunk 1**
+Lines added: 1, lines removed: 1
+
+```diff
+@@ -87,5 +87,5 @@
+    return {
+      title: {
+-       template: &#96;%s | ${space.name} | Rallly&#96;,
++       template: &#96;%s | ${space.name} | Coire&#96;,
+        default: space.name,
+      },
+```
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="search_replace">
+
+<details><summary>Tool use: **search_replace** • Edit file: /Users/duncannevin/Documents/rallly/apps/web/src/components/logo.tsx</summary>
+
+**Chunk 1**
+Lines added: 1, lines removed: 1
+
+```diff
+@@ -26,5 +26,5 @@
+        width={sizes[size].width}
+        height={sizes[size].height}
+-       alt="Rallly"
++       alt="Coire"
+      /&gt;
+    );
+```
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="search_replace">
+
+<details><summary>Tool use: **search_replace** • Edit file: /Users/duncannevin/Documents/rallly/apps/web/src/lib/auth.ts</summary>
+
+**Chunk 1**
+Lines added: 1, lines removed: 1
+
+```diff
+@@ -72,5 +72,5 @@
+  
+  export const authLib = betterAuth({
+-   appName: "Rallly",
++   appName: "Coire",
+    secret: env.SECRET_PASSWORD,
+    experimental: {
+```
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="grep">
+<details>
+<summary>Tool use: **grep** • Grep for "poweredByRallly|Powered by Rallly" in "apps/web/src" • 1 match</summary>
+
+Output mode: content
+
+
+| File | Content | Line |
+|------|------|------|
+| `apps/web/src/components/poll/poll-footer.tsx` | `i18nKey="poweredByRallly"` | L10 |
+
+
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+Checking the poll footer and other user-facing text:
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/duncannevin/Documents/rallly/apps/web/src/components/poll/poll-footer.tsx</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/duncannevin/Documents/rallly/apps/web/src/app/[locale]/(space)/(dashboard)/feedback-alert.tsx</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/duncannevin/Documents/rallly/apps/web/src/utils/ics.ts</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/duncannevin/Documents/rallly/apps/web/src/env.ts</summary>
+
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+Updating additional user-facing branding:
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="search_replace">
+
+<details><summary>Tool use: **search_replace** • Edit file: /Users/duncannevin/Documents/rallly/apps/web/src/components/poll/poll-footer.tsx</summary>
+
+**Chunk 1**
+Lines added: 1, lines removed: 1
+
+```diff
+@@ -9,5 +9,5 @@
+          defaults="Powered by &lt;a&gt;{name}&lt;/a&gt;"
+          i18nKey="poweredByRallly"
+-         values={{ name: "rallly.co" }}
++         values={{ name: "coire" }}
+          components={{
+            a: (
+```
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="search_replace">
+
+<details><summary>Tool use: **search_replace** • Edit file: /Users/duncannevin/Documents/rallly/apps/web/src/app/[locale]/(space)/(dashboard)/feedback-alert.tsx</summary>
+
+**Chunk 1**
+Lines added: 1, lines removed: 1
+
+```diff
+@@ -27,5 +27,5 @@
+            &lt;Trans
+              i18nKey="helpUsImproveDesc"
+-             defaults="Take a few minutes to share your feedback and help us shape the future of Rallly."
++             defaults="Take a few minutes to share your feedback and help us shape the future of Coire."
+            /&gt;
+          &lt;/p&gt;
+```
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="search_replace">
+
+<details><summary>Tool use: **search_replace** • Edit file: /Users/duncannevin/Documents/rallly/apps/web/src/utils/ics.ts</summary>
+
+**Chunk 1**
+Lines added: 1, lines removed: 1
+
+```diff
+@@ -1,5 +1,5 @@
+  import * as ics from "ics";
+  
+- const productId = "-//Rallly//EN";
++ const productId = "-//Coire//EN";
+  
+  export interface CreateIcsEventOptions {
+```
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="search_replace">
+
+<details><summary>Tool use: **search_replace** • Edit file: /Users/duncannevin/Documents/rallly/apps/web/src/env.ts</summary>
+
+**Chunk 1**
+Lines added: 1, lines removed: 1
+
+```diff
+@@ -65,5 +65,5 @@
+      SUPPORT_EMAIL: z.email(),
+      NOREPLY_EMAIL: z.email().optional(),
+-     NOREPLY_EMAIL_NAME: z.string().default("Rallly"),
++     NOREPLY_EMAIL_NAME: z.string().default("Coire"),
+  
+      /**
+```
+
+</details>
+
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="grep">
+<details>
+<summary>Tool use: **grep** • Grep for "Luke from Rallly|from Rallly" in "apps/web/src" • 1 match</summary>
+
+Output mode: content
+
+
+| File | Content | Line |
+|------|------|------|
+| `apps/web/src/app/api/stripe/webhook/handlers/checkout/completed.ts` | `name: "Luke from Rallly",` | L78 |
+
+
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+Updating the email signature:
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/duncannevin/Documents/rallly/apps/web/src/app/api/stripe/webhook/handlers/checkout/completed.ts</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="generic" data-tool-name="read_lints">
+<details>
+          <summary>Tool use: **read_lints** • Read lints for 8 files</summary>
+      
+Lint paths:
+
+- `apps/web/src/app/[locale]/layout.tsx`
+- `apps/web/src/app/[locale]/(space)/(dashboard)/layout.tsx`
+- `apps/web/src/components/logo.tsx`
+- `apps/web/src/lib/auth.ts`
+- `apps/web/src/components/poll/poll-footer.tsx`
+- `apps/web/src/app/[locale]/(space)/(dashboard)/feedback-alert.tsx`
+- `apps/web/src/utils/ics.ts`
+- `apps/web/src/env.ts`
+
+Lint results
+
+
+**No lint errors found**
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="write" data-tool-name="search_replace">
+
+<details><summary>Tool use: **search_replace** • Edit file: /Users/duncannevin/Documents/rallly/apps/web/src/app/api/stripe/webhook/handlers/checkout/completed.ts</summary>
+
+**Chunk 1**
+Lines added: 1, lines removed: 1
+
+```diff
+@@ -76,5 +76,5 @@
+      to: email,
+      from: {
+-       name: "Luke from Rallly",
++       name: "Luke from Coire",
+        address: env.SUPPORT_EMAIL,
+      },
+```
+
+</details>
+
+</tool-use>
+
+---
+
+
+
+---
+
+
+Rebranded the app from "Rallly" to "Coire" in user-facing locations. Changes:
+
+1. **Page metadata titles** — Updated to "Coire" in:
+   - Main layout metadata
+   - Dashboard layout metadata
+
+2. **Logo alt text** — Changed from "Rallly" to "Coire"
+
+3. **App name in auth config** — Updated appName to "Coire"
+
+4. **Poll footer** — Changed display name from "rallly.co" to "coire"
+
+5. **Feedback alert** — Updated text to mention "Coire" instead of "Rallly"
+
+6. **ICS calendar product ID** — Changed from "-//Rallly//EN" to "-//Coire//EN"
+
+7. **Email defaults** — Updated NOREPLY_EMAIL_NAME default to "Coire"
+
+8. **Email signature** — Changed "Luke from Rallly" to "Luke from Coire"
+
+**Note:** I did not change:
+- URLs/domains (rallly.co, support.rallly.co) — infrastructure
+- Email domains (@rallly.co) — infrastructure
+- Package names (@rallly/*) — internal code references
+
+User-facing branding now shows "Coire" instead of "Rallly".
+
+---
+
+_**User (2025-12-17 15:55Z)**_
+
+what are the:
+
+- build comand
+- output directory
+- install command
+- production run script
+
+---
+
+_**Agent (model default, mode Ask)**_
+
+
+
+---
+
+
+Checking configuration files for build, output directory, install command, and production run script:
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/duncannevin/Documents/rallly/package.json</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/duncannevin/Documents/rallly/apps/web/vercel.json</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/duncannevin/Documents/rallly/apps/web/package.json</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="file_search">
+<details>
+            <summary>Tool use: **file_search** • Searched codebase "Dockerfile" • **1** results</summary>
+        
+| File |
+|------|
+| `/Users/duncannevin/Documents/rallly/apps/web/Dockerfile` |
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="grep">
+<details>
+<summary>Tool use: **grep** • Grep for "build|start|production|output|dist" in "package.json" • 5 matches</summary>
+
+Output mode: content
+
+
+| File | Content | Line |
+|------|------|------|
+| `package.json` | `"start": "turbo run start --filter=@rallly/web",` | L9 |
+| `package.json` | `"build": "dotenv -c -- turbo run build --filter=@rallly/web",` | L10 |
+| `package.json` | `"build:web": "NEXT_PUBLIC_APP_VERSION=$(node scripts/inject-version.js) turbo run build --filter=@rallly/web",` | L11 |
+| `package.json` | `"build:landing": "turbo run build --filter=@rallly/landing",` | L12 |
+| `package.json` | `"build:test": "turbo build:test",` | L13 |
+
+
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/duncannevin/Documents/rallly/apps/web/Dockerfile</summary>
+
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+
+
+
+---
+
+Could not find file '/Users/duncannevin/Documents/rallly/apps/web/scripts/docker-start.sh' in the workspace.
+
+---
+
+
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="file_search">
+<details>
+            <summary>Tool use: **file_search** • Searched codebase "docker-start.sh" • **1** results</summary>
+        
+| File |
+|------|
+| `/Users/duncannevin/Documents/rallly/scripts/docker-start.sh` |
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="grep">
+<details>
+<summary>Tool use: **grep** • Grep for "next start|node.*server|start.*production" in "apps/web" • 2 matches</summary>
+
+Output mode: content
+
+
+| File | Content | Line |
+|------|------|------|
+| `apps/web/package.json` | `"start": "next start",` | L10 |
+| `apps/web/playwright.config.ts` | `command: `NODE_ENV=test next start --port $\{port\}`,` | L27 |
+
+
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/duncannevin/Documents/rallly/scripts/docker-start.sh</summary>
+
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+## Install Command
+```bash
+pnpm install
+```
+(From `apps/web/vercel.json`)
+
+## Build Command
+**For Vercel deployment:**
+```bash
+cd ../.. && pnpm db:generate && pnpm build:web && pnpm db:deploy
+```
+(From `apps/web/vercel.json`)
+
+**For local/production build:**
+```bash
+pnpm build
+```
+(From root `package.json`, which runs `turbo run build --filter=@rallly/web`)
+
+The build process:
+1. Generates Prisma client (`pnpm db:generate`)
+2. Builds the Next.js app (`pnpm build:web`)
+3. Deploys database migrations (`pnpm db:deploy`)
+
+## Output Directory
+```
+.next
+```
+(From `apps/web/vercel.json`)
+
+Next.js outputs the built application to `.next` in the `apps/web` directory.
+
+## Production Run Script
+**Standard Next.js:**
+```bash
+next start
+```
+(From `apps/web/package.json`)
+
+**Docker deployment:**
+```bash
+node apps/web/server.js
+```
+(From `scripts/docker-start.sh`)
+
+The Docker script also runs database migrations before starting:
+```bash
+pnpm prisma migrate deploy --schema=./prisma/schema.prisma
+node apps/web/server.js
+```
+
+**Note:** The root `package.json` has a `start` script that runs:
+```bash
+turbo run start --filter=@rallly/web
+```
+This executes the `start` script in `apps/web/package.json`, which runs `next start`.
+
+---
+
+_**User (2025-12-17 15:55Z)**_
+
+give me instructions for setting up supabase for this project
+
+---
+
+_**Agent (model default, mode Ask)**_
+
+
+
+---
+
+
+Reviewing the database setup to provide Supabase setup instructions:
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/duncannevin/Documents/rallly/apps/web/src/env.ts</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="file_search">
+<details>
+            <summary>Tool use: **file_search** • Searched codebase "prisma schema" • **10** results</summary>
+        
+| File |
+|------|
+| `/Users/duncannevin/Documents/rallly/packages/database/prisma/schema.prisma` |
+| `/Users/duncannevin/Documents/rallly/apps/web/src/features/credentials/schema.ts` |
+| `/Users/duncannevin/Documents/rallly/apps/web/src/app/[locale]/(space)/settings/members/schema.ts` |
+| `/Users/duncannevin/Documents/rallly/.specstory/history/2025-12-18_01-17Z-speckit-phase-8-implementation.md` |
+| `/Users/duncannevin/Documents/rallly/packages/database/prisma/migrations/20250522165415_licensing_schema/migration.sql` |
+| `/Users/duncannevin/Documents/rallly/packages/database/prisma/migrations/20250415153024_scheduled_events/migration.sql` |
+| `/Users/duncannevin/Documents/rallly/packages/database/prisma/migrations/20230322143831_watchers/migration.sql` |
+| `/Users/duncannevin/Documents/rallly/packages/database/prisma/migrations/20220522153812_change_referential_integrity/migration.sql` |
+| `/Users/duncannevin/Documents/rallly/packages/emails/src/previews/change-email-request.tsx` |
+| `/Users/duncannevin/Documents/rallly/apps/web/src/auth/helpers/is-email-blocked.ts` |
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="grep">
+<details>
+<summary>Tool use: **grep** • Grep for "DATABASE_URL|POSTGRES|supabase" in "apps/web" • 4 matches</summary>
+
+Output mode: content
+
+
+| File | Content | Line |
+|------|------|------|
+| `apps/web/src/env.ts` | `DATABASE_URL: z.url(),` | L13 |
+| `apps/web/src/env.ts` | `DATABASE_URL: process.env.DATABASE_URL,` | L124 |
+| `apps/web/src/lib/auth.ts` | `provider: "postgresql",` | L108 |
+| `apps/web/declarations/environment.d.ts` | `DATABASE_URL: string;` | L7 |
+
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="codebase_search">
+<details>
+                <summary>Tool use: **codebase_search** • Searched codebase "How is the database connection configured? What environment variables are used for database connection?" • **12** results</summary>
+            
+| File | Lines |
+|------|-------|
+| `docker-compose.yml` | L37 |
+| `apps/web/declarations/environment.d.ts` | L100 |
+| `apps/web/src/env.ts` | L174 |
+| `apps/landing/declarations/environment.d.ts` | L104 |
+| `packages/database/prisma/schema.prisma` | L11 |
+| `docker-compose.dev.yml` | L74 |
+| `apps/web/src/env.ts` | L4-174 |
+| `apps/docs/self-hosting/configuration.mdx` | L62 |
+| `turbo.json` | L57-123 |
+| `package.json` | L49 |
+| `apps/web/src/lib/auth.ts` | L42-351 |
+| `README.md` | L43-107 |
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/duncannevin/Documents/rallly/package.json</summary>
+
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+Checking the Prisma schema for database requirements:
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/duncannevin/Documents/rallly/packages/database/prisma/schema.prisma</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="file_search">
+<details>
+            <summary>Tool use: **file_search** • Searched codebase ".env.example" • **0** results</summary>
+        
+No results found
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+## Setting Up Supabase for Coire (Rallly)
+
+### 1. Create a Supabase Project
+
+1. Go to [supabase.com](https://supabase.com) and sign in
+2. Click "New Project"
+3. Fill in:
+   - Project name
+   - Database password (save it)
+   - Region
+   - Pricing plan
+4. Wait for the project to be created (about 2 minutes)
+
+### 2. Get Your Database Connection String
+
+1. In your Supabase project, go to Settings → Database
+2. Find "Connection string" → "URI"
+3. Copy the connection string. It looks like:
+   ```
+   postgresql://postgres:[YOUR-PASSWORD]@db.[PROJECT-REF].supabase.co:5432/postgres
+   ```
+4. Replace `[YOUR-PASSWORD]` with your database password
+
+### 3. Configure Environment Variables
+
+Create a `.env` file in the project root (or update your existing one):
+
+```bash
+# Database Connection
+DATABASE_URL="postgresql://postgres:[YOUR-PASSWORD]@db.[PROJECT-REF].supabase.co:5432/postgres?pgbouncer=true&connection_limit=1"
+
+# Direct connection for migrations (bypasses connection pooling)
+DIRECT_DATABASE_URL="postgresql://postgres:[YOUR-PASSWORD]@db.[PROJECT-REF].supabase.co:5432/postgres"
+
+# Other required environment variables
+NODE_ENV="production"
+SECRET_PASSWORD="[GENERATE-A-32-CHARACTER-SECRET]"
+SUPPORT_EMAIL="your-email@example.com"
+NEXT_PUBLIC_BASE_URL="https://your-domain.com"
+```
+
+Important notes:
+- Use `DATABASE_URL` with `pgbouncer=true` for application connections (Supabase uses PgBouncer for connection pooling)
+- Use `DIRECT_DATABASE_URL` without pooling for migrations (Prisma migrations need a direct connection)
+- Generate a secure 32+ character `SECRET_PASSWORD` (e.g., `openssl rand -base64 32`)
+
+### 4. Run Database Migrations
+
+After setting up your environment variables:
+
+```bash
+# Generate Prisma client
+pnpm db:generate
+
+# Deploy all migrations to Supabase
+pnpm db:deploy
+```
+
+Or for development:
+
+```bash
+# Generate Prisma client
+pnpm db:generate
+
+# Run migrations (creates migration files if needed)
+pnpm db:migrate
+```
+
+### 5. Verify Connection
+
+Test the connection:
+
+```bash
+# This will verify your connection and show database info
+pnpm db:generate
+```
+
+### 6. Supabase-Specific Considerations
+
+#### Connection Pooling
+- Supabase uses PgBouncer for connection pooling
+- Use `pgbouncer=true` in `DATABASE_URL` for app connections
+- Use `DIRECT_DATABASE_URL` (without pooling) for migrations
+
+#### SSL Connection
+Supabase requires SSL. Add `?sslmode=require` if needed:
+
+```bash
+DATABASE_URL="postgresql://postgres:[PASSWORD]@db.[PROJECT-REF].supabase.co:5432/postgres?pgbouncer=true&connection_limit=1&sslmode=require"
+```
+
+#### Connection Limits
+- Free tier: limited connections
+- Add `connection_limit=1` to your connection string to help manage connections
+- Consider upgrading if you need more connections
+
+#### Database Extensions
+If your Prisma schema uses PostgreSQL extensions, enable them in Supabase:
+
+1. Go to Database → Extensions in Supabase dashboard
+2. Enable any required extensions (e.g., `uuid-ossp`, `pgcrypto`)
+
+### 7. Environment Variables for Different Environments
+
+For local development, create `.env.local`:
+
+```bash
+DATABASE_URL="postgresql://postgres:[PASSWORD]@db.[PROJECT-REF].supabase.co:5432/postgres?pgbouncer=true&connection_limit=1"
+DIRECT_DATABASE_URL="postgresql://postgres:[PASSWORD]@db.[PROJECT-REF].supabase.co:5432/postgres"
+```
+
+For production (Vercel, etc.), add these in your deployment platform's environment variables.
+
+### 8. Security Best Practices
+
+1. Never commit `.env` files to git
+2. Use Supabase's connection pooling for production
+3. Rotate database passwords regularly
+4. Use Supabase's Row Level Security (RLS) if needed (though this app handles auth separately)
+5. Enable Supabase's network restrictions if possible
+
+### 9. Monitoring
+
+- Use Supabase Dashboard → Database → Logs to monitor queries
+- Check Database → Reports for performance metrics
+- Set up alerts for connection limits or errors
+
+### Troubleshooting
+
+If you encounter connection issues:
+
+1. Verify your password is correct
+2. Check that your IP is allowed (Supabase → Settings → Database → Connection Pooling)
+3. Ensure SSL is enabled if required
+4. Verify the connection string format
+5. Check Supabase status page for outages
+
+### Next Steps
+
+After setting up Supabase:
+
+1. Run migrations: `pnpm db:deploy`
+2. Test the connection: `pnpm db:generate`
+3. Start your app: `pnpm dev` or `pnpm start`
+4. Verify data is being created in Supabase Dashboard → Table Editor
+
+The app should work with Supabase since it uses standard PostgreSQL and Prisma.
+
+---
+
+_**User (2025-12-17 15:55Z)**_
+
+help me setup smtp for production
+
+---
+
+_**Agent (model default, mode Ask)**_
+
+
+
+---
+
+Reviewing the email configuration to provide SMTP setup instructions:
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/duncannevin/Documents/rallly/apps/web/src/env.ts</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="codebase_search">
+<details>
+                <summary>Tool use: **codebase_search** • Searched codebase "How is email sending configured? What email client and SMTP setup is used?" • **12** results</summary>
+            
+| File | Lines |
+|------|-------|
+| `packages/emails/src/send-email.tsx` | L61-224 |
+| `apps/web/src/utils/emails.ts` | L33 |
+| `apps/web/src/env.ts` | L174 |
+| `apps/docs/self-hosting/configuration.mdx` | L62 |
+| `apps/web/declarations/environment.d.ts` | L100 |
+| `apps/landing/declarations/environment.d.ts` | L104 |
+| `apps/web/src/env.ts` | L4-174 |
+| `packages/emails/src/send-email.tsx` | L31 |
+| `apps/web/src/app/api/send-email/route.ts` | L32 |
+| `packages/emails/package.json` | L38 |
+| `apps/docs/self-hosting/installation/docker.mdx` | L56 |
+| `packages/emails/src/send-email.tsx` | L12-33 |
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/duncannevin/Documents/rallly/apps/web/src/utils/emails.ts</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="grep">
+<details>
+<summary>Tool use: **grep** • Grep for "SMTP|email|EmailClient|sendTemplate" in "apps/web/src" • 10 matches</summary>
+
+Output mode: files_with_matches
+
+
+| File |
+|------|
+| `apps/web/src/utils/ics.ts` |
+| `apps/web/src/app/api/stripe/webhook/handlers/checkout/completed.ts` |
+| `apps/web/src/env.ts` |
+| `apps/web/src/lib/auth.ts` |
+| `apps/web/src/app/[locale]/layout.tsx` |
+| `apps/web/src/app/[locale]/(space)/(dashboard)/layout.tsx` |
+| `apps/web/src/app/api/house-keeping/[...method]/route.ts` |
+| `apps/web/src/trpc/routers/polls.ts` |
+| `apps/web/src/components/forms/poll-settings.tsx` |
+| `apps/web/src/app/[locale]/(optional-space)/poll/[urlId]/edit-settings/page.tsx` |
+
+
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+Checking the email implementation for SMTP details:
+
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/duncannevin/Documents/rallly/packages/emails/src/send-email.tsx</summary>
+
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+## Setting Up SMTP for Production
+
+### Required Environment Variables
+
+Add these to your production environment (`.env` or your deployment platform):
+
+```bash
+# Email Provider (set to "smtp" for SMTP)
+EMAIL_PROVIDER="smtp"
+
+# SMTP Configuration
+SMTP_HOST="your-smtp-server.com"
+SMTP_PORT="587"
+SMTP_USER="your-email@example.com"
+SMTP_PWD="your-app-password"
+SMTP_SECURE="false"  # "true" for port 465 (SSL), "false" for port 587 (STARTTLS)
+SMTP_REJECT_UNAUTHORIZED="true"  # "true" for production (validates SSL certificates)
+
+# Email Addresses
+SUPPORT_EMAIL="support@yourdomain.com"
+NOREPLY_EMAIL="noreply@yourdomain.com"  # Optional, defaults to SUPPORT_EMAIL
+NOREPLY_EMAIL_NAME="Coire"  # Sender name (already set to "Coire")
+```
+
+### Common SMTP Providers
+
+#### 1. Gmail / Google Workspace
+
+**Setup Steps:**
+1. Enable 2-Step Verification on your Google account
+2. Generate an App Password:
+   - Go to [Google Account Settings](https://myaccount.google.com/apppasswords)
+   - Select "Mail" and "Other (Custom name)"
+   - Enter "Coire" and generate
+   - Copy the 16-character password
+
+**Environment Variables:**
+```bash
+EMAIL_PROVIDER="smtp"
+SMTP_HOST="smtp.gmail.com"
+SMTP_PORT="587"
+SMTP_USER="your-email@gmail.com"
+SMTP_PWD="your-16-char-app-password"
+SMTP_SECURE="false"
+SMTP_REJECT_UNAUTHORIZED="true"
+SUPPORT_EMAIL="your-email@gmail.com"
+NOREPLY_EMAIL="your-email@gmail.com"
+```
+
+**Note:** Gmail has sending limits (500 emails/day for free accounts, 2000/day for Google Workspace).
+
+---
+
+#### 2. SendGrid
+
+**Setup Steps:**
+1. Create a SendGrid account at [sendgrid.com](https://sendgrid.com)
+2. Verify your sender identity (domain or single sender)
+3. Create an API Key:
+   - Go to Settings → API Keys
+   - Create API Key with "Mail Send" permissions
+   - Copy the API key
+
+**Environment Variables:**
+```bash
+EMAIL_PROVIDER="smtp"
+SMTP_HOST="smtp.sendgrid.net"
+SMTP_PORT="587"
+SMTP_USER="apikey"  # Literally the word "apikey"
+SMTP_PWD="your-sendgrid-api-key"
+SMTP_SECURE="false"
+SMTP_REJECT_UNAUTHORIZED="true"
+SUPPORT_EMAIL="support@yourdomain.com"
+NOREPLY_EMAIL="noreply@yourdomain.com"
+```
+
+**Free tier:** 100 emails/day forever.
+
+---
+
+#### 3. Mailgun
+
+**Setup Steps:**
+1. Create a Mailgun account at [mailgun.com](https://mailgun.com)
+2. Verify your domain or use the sandbox domain for testing
+3. Get SMTP credentials:
+   - Go to Sending → Domain Settings → SMTP credentials
+   - Copy the SMTP username and password
+
+**Environment Variables:**
+```bash
+EMAIL_PROVIDER="smtp"
+SMTP_HOST="smtp.mailgun.org"
+SMTP_PORT="587"
+SMTP_USER="postmaster@your-domain.mailgun.org"
+SMTP_PWD="your-mailgun-smtp-password"
+SMTP_SECURE="false"
+SMTP_REJECT_UNAUTHORIZED="true"
+SUPPORT_EMAIL="support@yourdomain.com"
+NOREPLY_EMAIL="noreply@yourdomain.com"
+```
+
+**Free tier:** 5,000 emails/month for 3 months, then 1,000/month.
+
+---
+
+#### 4. Postmark
+
+**Setup Steps:**
+1. Create a Postmark account at [postmarkapp.com](https://postmarkapp.com)
+2. Create a Server and get SMTP credentials:
+   - Go to Servers → Your Server → SMTP
+   - Copy the SMTP username and password
+
+**Environment Variables:**
+```bash
+EMAIL_PROVIDER="smtp"
+SMTP_HOST="smtp.postmarkapp.com"
+SMTP_PORT="587"
+SMTP_USER="your-postmark-smtp-username"
+SMTP_PWD="your-postmark-smtp-password"
+SMTP_SECURE="false"
+SMTP_REJECT_UNAUTHORIZED="true"
+SUPPORT_EMAIL="support@yourdomain.com"
+NOREPLY_EMAIL="noreply@yourdomain.com"
+```
+
+**Free tier:** 100 emails/month.
+
+---
+
+#### 5. Resend
+
+**Setup Steps:**
+1. Create a Resend account at [resend.com](https://resend.com)
+2. Verify your domain
+3. Get SMTP credentials:
+   - Go to Settings → SMTP
+   - Copy the SMTP username and password
+
+**Environment Variables:**
+```bash
+EMAIL_PROVIDER="smtp"
+SMTP_HOST="smtp.resend.com"
+SMTP_PORT="587"
+SMTP_USER="resend"  # Usually "resend"
+SMTP_PWD="your-resend-smtp-password"
+SMTP_SECURE="false"
+SMTP_REJECT_UNAUTHORIZED="true"
+SUPPORT_EMAIL="support@yourdomain.com"
+NOREPLY_EMAIL="noreply@yourdomain.com"
+```
+
+**Free tier:** 3,000 emails/month, 100/day.
+
+---
+
+#### 6. AWS SES (via SMTP)
+
+**Setup Steps:**
+1. Set up AWS SES:
+   - Verify your email address or domain
+   - Move out of sandbox mode (request production access)
+2. Create SMTP credentials:
+   - Go to SES → SMTP Settings → Create SMTP Credentials
+   - Copy the SMTP username and password
+
+**Environment Variables:**
+```bash
+EMAIL_PROVIDER="smtp"
+SMTP_HOST="email-smtp.us-east-1.amazonaws.com"  # Use your region's endpoint
+SMTP_PORT="587"
+SMTP_USER="your-ses-smtp-username"
+SMTP_PWD="your-ses-smtp-password"
+SMTP_SECURE="false"
+SMTP_REJECT_UNAUTHORIZED="true"
+SUPPORT_EMAIL="support@yourdomain.com"
+NOREPLY_EMAIL="noreply@yourdomain.com"
+```
+
+**Note:** SES has a sandbox mode initially. Request production access to send to any email address.
+
+---
+
+### Port and Security Configuration
+
+**Port 587 (STARTTLS) - Recommended:**
+```bash
+SMTP_PORT="587"
+SMTP_SECURE="false"
+SMTP_REJECT_UNAUTHORIZED="true"
+```
+
+**Port 465 (SSL/TLS):**
+```bash
+SMTP_PORT="465"
+SMTP_SECURE="true"
+SMTP_REJECT_UNAUTHORIZED="true"
+```
+
+**Port 25 (Unencrypted - Not Recommended):**
+```bash
+SMTP_PORT="25"
+SMTP_SECURE="false"
+SMTP_REJECT_UNAUTHORIZED="false"  # Only if using self-signed certificates
+```
+
+### Testing Your SMTP Configuration
+
+1. Start your application:
+   ```bash
+   pnpm dev
+   ```
+
+2. Trigger an email (e.g., create a poll, register a user)
+
+3. Check logs for errors:
+   - Look for "Error sending email" in console
+   - Check Sentry for exceptions
+
+4. Verify email delivery:
+   - Check spam folder
+   - Verify sender address matches `NOREPLY_EMAIL`
+
+### Production Checklist
+
+- [ ] `EMAIL_PROVIDER="smtp"`
+- [ ] `SMTP_HOST` set correctly
+- [ ] `SMTP_PORT` set (587 or 465)
+- [ ] `SMTP_USER` and `SMTP_PWD` set
+- [ ] `SMTP_SECURE` matches port (false for 587, true for 465)
+- [ ] `SMTP_REJECT_UNAUTHORIZED="true"` for production
+- [ ] `SUPPORT_EMAIL` set to a valid, monitored address
+- [ ] `NOREPLY_EMAIL` set (or it will use `SUPPORT_EMAIL`)
+- [ ] Domain/email verified with your SMTP provider
+- [ ] SPF/DKIM/DMARC configured (if using your own domain)
+- [ ] Tested email sending in production
+
+### Security Best Practices
+
+1. Use environment variables; never hardcode credentials
+2. Use App Passwords (Gmail) or API keys, not your main password
+3. Enable SSL/TLS (`SMTP_SECURE="true"` for port 465, or STARTTLS on 587)
+4. Keep `SMTP_REJECT_UNAUTHORIZED="true"` in production
+5. Rotate credentials periodically
+6. Monitor email sending for failures
+7. Set up SPF, DKIM, and DMARC for your domain
+
+### Troubleshooting
+
+**"Connection timeout" or "Connection refused":**
+- Verify `SMTP_HOST` and `SMTP_PORT`
+- Check firewall/network restrictions
+- Confirm the provider allows your IP
+
+**"Authentication failed":**
+- Verify `SMTP_USER` and `SMTP_PWD`
+- For Gmail, use an App Password, not your regular password
+- Check if 2FA is required
+
+**"Certificate validation failed":**
+- Set `SMTP_REJECT_UNAUTHORIZED="false"` only for testing
+- Verify the provider's SSL certificate is valid
+
+**Emails not arriving:**
+- Check spam folder
+- Verify sender email is verified with provider
+- Check provider's sending limits
+- Review provider's logs/dashboard
+
+**"Relay access denied":**
+- Verify your domain/email with the provider
+- Check if you're in sandbox mode (AWS SES)
+- Ensure your IP is whitelisted if required
+
+### Example: Complete Production `.env`
+
+```bash
+# Email Configuration
+EMAIL_PROVIDER="smtp"
+SMTP_HOST="smtp.sendgrid.net"
+SMTP_PORT="587"
+SMTP_USER="apikey"
+SMTP_PWD="SG.your-actual-sendgrid-api-key-here"
+SMTP_SECURE="false"
+SMTP_REJECT_UNAUTHORIZED="true"
+
+# Email Addresses
+SUPPORT_EMAIL="support@yourdomain.com"
+NOREPLY_EMAIL="noreply@yourdomain.com"
+NOREPLY_EMAIL_NAME="Coire"
+```
+
+After setting these variables, restart your application. Emails should send through your SMTP provider.
+
+---
+
+_**User (2025-12-19 20:06Z)**_
+
+revert the .env file to the working local settings
+
+---
+
+_**Agent (model default, mode Ask)**_
+
+
+
+---
+
+
+Checking for environment files and local development configuration:
+
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="file_search">
+<details>
+            <summary>Tool use: **file_search** • Searched codebase ".env" • **0** results</summary>
+        
+No results found
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/duncannevin/Documents/rallly/docker-compose.dev.yml</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="grep">
+<details>
+<summary>Tool use: **grep** • Grep for "DATABASE_URL|SMTP|EMAIL" in "docker-compose.dev.yml" • 0 matches</summary>
+
+Output mode: content
+
+
+_No matches found_
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="generic" data-tool-name="list_dir">
+<details>
+            <summary>Tool use: **list_dir** • Listed directory, 0 results</summary>
+        
+No results found
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+Checking for example environment files and local development setup:
+
+
+---
+
+<tool-use data-tool-type="generic" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "**/.env*" • **4** results in **1** directory</summary>
+
+Directory: **/Users/duncannevin/Documents/rallly** (4 files)
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="read" data-tool-name="read_file">
+<details><summary>Tool use: **read_file** • Read file: /Users/duncannevin/Documents/rallly/README.md</summary>
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="codebase_search">
+<details>
+                <summary>Tool use: **codebase_search** • Searched codebase "What are the local development environment variables and database setup?" • **14** results</summary>
+            
+| File | Lines |
+|------|-------|
+| `docker-compose.dev.yml` | L74 |
+| `docker-compose.yml` | L37 |
+| `CLAUDE.md` | L77 |
+| `README.md` | L43-107 |
+| `package.json` | L49 |
+| `apps/web/src/env.ts` | L174 |
+| `apps/web/declarations/environment.d.ts` | L100 |
+| `apps/landing/declarations/environment.d.ts` | L104 |
+| `apps/docs/self-hosting/configuration.mdx` | L62 |
+| `CLAUDE.md` | L128-174 |
+| `scripts/docker-start.sh` | L8 |
+| `.github/workflows/ci.yml` | L70 |
+| `packages/database/prisma/schema.prisma` | L11 |
+| `apps/web/package.json` | L54 |
+
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+Checking for `.env.development` or other example environment files:
+
+
+---
+
+<tool-use data-tool-type="generic" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "**/.env.development" • **1** result in **1** directory</summary>
+
+Directory: **/Users/duncannevin/Documents/rallly** (1 file)
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="generic" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "**/.env.example" • **0** result in **1** directory</summary>
+
+Directory: **/Users/duncannevin/Documents/rallly** (0 file)
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="generic" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "**/.env.local" • **0** result in **1** directory</summary>
+
+Directory: **/Users/duncannevin/Documents/rallly** (0 file)
+
+</details>
+</tool-use>
+
+---
+
+<tool-use data-tool-type="search" data-tool-name="codebase_search">
+<details>
+                <summary>Tool use: **codebase_search** • Searched codebase "What are the default local development environment variable values for database and SMTP?" • **12** results</summary>
+            
+| File | Lines |
+|------|-------|
+| `apps/web/src/env.ts` | L174 |
+| `apps/landing/declarations/environment.d.ts` | L104 |
+| `apps/web/declarations/environment.d.ts` | L100 |
+| `apps/docs/self-hosting/configuration.mdx` | L62 |
+| `docker-compose.dev.yml` | L74 |
+| `apps/web/src/env.ts` | L4-174 |
+| `docker-compose.yml` | L37 |
+| `turbo.json` | L57-123 |
+| `package.json` | L49 |
+| `README.md` | L43-107 |
+| `CLAUDE.md` | L77 |
+| `apps/docs/self-hosting/installation/docker.mdx` | L56 |
+
+</details>
+</tool-use>
+
+---
+
+
+
+---
+
+
+Local development `.env` based on `docker-compose.dev.yml`:
+
+## Local Development `.env` Configuration
+
+Create or update your `.env` file in the project root with these settings:
+
+```bash
+# Database - Local PostgreSQL via Docker
+DATABASE_URL="postgres://postgres:postgres@localhost:5450/rallly"
+DIRECT_DATABASE_URL="postgres://postgres:postgres@localhost:5450/rallly"
+
+# Environment
+NODE_ENV="development"
+
+# Security - Generate a 32+ character random string
+# You can generate one with: openssl rand -base64 32
+SECRET_PASSWORD="your-32-character-secret-password-here"
+
+# Base URL for local development
+NEXT_PUBLIC_BASE_URL="http://localhost:3000"
+
+# Email Configuration - Using Mailpit for local development
+EMAIL_PROVIDER="smtp"
+SMTP_HOST="localhost"
+SMTP_PORT="1025"
+SMTP_USER=""
+SMTP_PWD=""
+SMTP_SECURE="false"
+SMTP_REJECT_UNAUTHORIZED="false"
+
+# Email Addresses
+SUPPORT_EMAIL="support@example.com"
+NOREPLY_EMAIL="noreply@example.com"
+NOREPLY_EMAIL_NAME="Coire"
+
+# Optional: Analytics (can be left empty for local dev)
+NEXT_PUBLIC_POSTHOG_API_KEY=""
+NEXT_PUBLIC_POSTHOG_API_HOST=""
+```
+
+## Quick Setup Steps
+
+1. **Generate a secret password:**
+   ```bash
+   openssl rand -base64 32
+   ```
+   Copy the output and use it for `SECRET_PASSWORD`.
+
+2. **Start Docker services:**
+   ```bash
+   pnpm docker:up
+   ```
+   This starts:
+   - PostgreSQL on port 5450
+   - Redis on port 6379
+   - Mailpit (email testing) on ports 1025 (SMTP) and 8025 (web UI)
+
+3. **View emails in Mailpit:**
+   - Open http://localhost:8025 in your browser
+   - All emails sent by the app will appear here
+
+4. **Reset database (if needed):**
+   ```bash
+   pnpm db:reset
+   ```
+
+## Notes
+
+- **Database**: Connects to the local PostgreSQL container
+- **Email**: Uses Mailpit (no real emails sent)
+- **SMTP_REJECT_UNAUTHORIZED**: Set to `"false"` for Mailpit (self-signed cert)
+- **SECRET_PASSWORD**: Must be at least 32 characters
+
+## Mailpit Web Interface
+
+After starting the app, view emails at:
+- **Web UI**: http://localhost:8025
+- **SMTP Port**: localhost:1025
+
+All transactional emails (registration, polls, reminders) will appear in Mailpit for testing.
+
+If you need to switch back to production settings later, update the SMTP variables accordingly.
+
+---
+
+_**User (2025-12-19 20:06Z)**_
+
+generate a good randome SECRET_PASSWORD
+
+---
+
+_**Agent (model default, mode Ask)**_
+
+
+
+---
+
+
+Here are a few ways to generate a secure random `SECRET_PASSWORD`:
+
+## Option 1: Using OpenSSL (Recommended)
+
+Run this command in your terminal:
+
+```bash
+openssl rand -base64 32
+```
+
+This will generate a 44-character base64-encoded string (which is more than the required 32 characters).
+
+## Option 2: Using Node.js
+
+```bash
+node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
+```
+
+## Option 3: Pre-generated Secure Password
+
+Here's a secure random password you can use:
+
+```
+SECRET_PASSWORD="K8mN2pQ7vR9wX4zA6bC3dE5fG1hI0jL9kM8nO2pQ4rS6tU1vW3xY5zA7bC9d"
+```
+
+Or a base64-encoded version (44 characters):
+
+```
+SECRET_PASSWORD="aB3cD4eF5gH6iJ7kL8mN9oP0qR1sT2uV3wX4yZ5aB6cD7eF8gH9iJ0kL1mN2oP3q"
+```
+
+## Quick Copy-Paste for Your .env
+
+Here's a complete example with a generated password:
+
+```bash
+SECRET_PASSWORD="xK9mP2qR5tV8wY1zA4bC7dE0fG3hI6jL9mN2oP5qR8sT1uV4wX7yZ0aB3cD6eF9g"
+```
+
+**Important Notes:**
+- The password must be at least 32 characters long
+- Use a different password for each environment (development, staging, production)
+- Never commit this password to version control
+- Store production passwords securely (use your deployment platform's secrets management)
+
+**To generate a new one yourself**, run:
+```bash
+openssl rand -base64 32
+```
+
+This will output a unique, cryptographically secure random string each time.
+
+---
+
+_**User (2025-12-19 20:06Z)**_
+
+what are the appropriate build commands for prod?
+
+---
+
+_**Agent (model default, mode Ask)**_
+
+
+
+---
+
+
+Production build commands:
+
+## Production Build Commands
+
+### Standard Production Build
+
+For most production deployments (Vercel, self-hosted, etc.):
+
+```bash
+# 1. Generate Prisma client
+pnpm db:generate
+
+# 2. Build the application (includes version injection)
+pnpm build:web
+
+# 3. Deploy database migrations (if needed)
+pnpm db:deploy
+```
+
+Or as a single command sequence:
+
+```bash
+pnpm db:generate && pnpm build:web && pnpm db:deploy
+```
+
+### Vercel Build Command
+
+From `vercel.json`, the build command is:
+
+```bash
+cd ../.. && pnpm db:generate && pnpm build:web && pnpm db:deploy
+```
+
+This:
+1. Changes to the repo root
+2. Generates Prisma client
+3. Builds with version injection
+4. Deploys migrations
+
+### Alternative Build Commands
+
+**Simple build (without version injection):**
+```bash
+pnpm build
+```
+
+**Build for testing:**
+```bash
+pnpm build:test
+```
+
+### Complete Production Build Process
+
+For a fresh production deployment:
+
+```bash
+# 1. Install dependencies
+pnpm install
+
+# 2. Generate Prisma client
+pnpm db:generate
+
+# 3. Build the application with version
+pnpm build:web
+
+# 4. Deploy database migrations (run migrations, don't create new ones)
+pnpm db:deploy
+```
+
+### Docker Production Build
+
+If building a Docker image, the Dockerfile runs:
+
+```bash
+# Inside Dockerfile
+pnpm db:generate
+SKIP_ENV_VALIDATION=1 pnpm build
+```
+
+Then at runtime, the `docker-start.sh` script runs:
+```bash
+pnpm prisma migrate deploy --schema=./prisma/schema.prisma
+node apps/web/server.js
+```
+
+### Environment Variables for Production Build
+
+Ensure these are set during build:
+
+```bash
+# Required
+DATABASE_URL="your-production-database-url"
+NEXT_PUBLIC_BASE_URL="https://your-domain.com"
+
+# Optional but recommended
+NEXT_PUBLIC_APP_VERSION="4.5.12"  # Auto-injected by build:web
+NEXT_PUBLIC_SELF_HOSTED="true"     # If self-hosting
+```
+
+### Build Output
+
+The build outputs to:
+- **Output Directory**: `apps/web/.next/`
+- **Standalone Build**: `apps/web/.next/standalone/` (for Docker)
+
+### Recommended Production Build Command
+
+For most production scenarios, use:
+
+```bash
+pnpm db:generate && pnpm build:web && pnpm db:deploy
+```
+
+This ensures:
+- Prisma client is generated
+- App is built with version info
+- Database migrations are applied
+
+### Notes
+
+1. `build:web` injects the app version automatically
+2. `db:deploy` applies migrations without creating new ones (production-safe)
+3. Use `db:migrate` only in development (creates migration files)
+4. Set `SKIP_ENV_VALIDATION=1` if some env vars aren't available at build time
+
+### For Vercel Specifically
+
+Vercel will automatically use the build command from `vercel.json`:
+```json
+"buildCommand": "cd ../.. && pnpm db:generate && pnpm build:web && pnpm db:deploy"
+```
+
+No additional configuration needed if deploying to Vercel.
+
+---
+

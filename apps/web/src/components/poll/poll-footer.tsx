@@ -8,7 +8,7 @@ export function PollFooter() {
       <Trans
         defaults="Powered by <a>{name}</a>"
         i18nKey="poweredByRallly"
-        values={{ name: "rallly.co" }}
+        values={{ name: "coire" }}
         components={{
           a: (
             <Link

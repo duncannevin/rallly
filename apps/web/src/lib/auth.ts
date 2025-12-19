@@ -71,7 +71,7 @@ if (env.OIDC_CLIENT_ID && env.OIDC_CLIENT_SECRET && env.OIDC_DISCOVERY_URL) {
 }
 
 export const authLib = betterAuth({
-  appName: "Rallly",
+  appName: "Coire",
   secret: env.SECRET_PASSWORD,
   experimental: {
     joins: true,
