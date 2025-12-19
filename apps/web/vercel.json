@@ -1,7 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "installCommand": "pnpm install",
-  "buildCommand": "pnpm db:generate && pnpm build:web && pnpm db:deploy",
+  "buildCommand": "cd ../.. && pnpm db:generate && pnpm build:web && pnpm db:deploy",
   "outputDirectory": ".next",
   "crons": [
     {
